@@ -2,7 +2,7 @@
 <?php
 require __DIR__.'/../vendor/autoload.php';
 
-
-$app = new \Cli\Cli();
+global $argv;
+$app = new \Cli\Cli($argv,getcwd());
 
 $app->run();

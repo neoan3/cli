@@ -8,17 +8,16 @@ use Creation\Creation;
 
 class Cli
 {
-    public $arguments = [];
-    public $flags = [];
-    public $workPath;
+    public array $arguments = [];
+    public array $flags = [];
+    public string $workPath;
 
-    function __construct()
+    function __construct($arguments, $workPath)
     {
-        global $argv;
-        $intermittent = $argv;
-        array_shift($intermittent);
-        $this->workPath = getcwd();
-        $this->argumentConstructor($intermittent);
+
+        $this->workPath = $workPath;
+        array_shift($arguments);
+        $this->argumentConstructor($arguments);
     }
     private function argumentConstructor($arguments)
     {
@@ -40,7 +39,7 @@ class Cli
     {
         switch ($this->arguments[0]){
             case 'new':
-                new Creation();
+                return new Creation($this);
         }
     }
 

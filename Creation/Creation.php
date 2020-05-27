@@ -4,25 +4,29 @@
 namespace Creation;
 
 
-use Cli\Cli;
-
-class Creation extends Cli
+class Creation
 {
-    function __construct()
+    private \Cli\Cli $cli;
+    function __construct(\Cli\Cli $cli)
     {
-        parent::__construct();
+        $this->cli = $cli;
         if($this->needed()){
-            $class = '\\Creation\\' . ucfirst($this->arguments[1]);
-            $runner = new $class();
-            $runner->init();
+            $this->run();
         }
+        return false;
+    }
+    function run()
+    {
+        $class = '\\Creation\\' . ucfirst($this->cli->arguments[1]);
+        $runner = new $class($this->cli);
+        return $runner->init();
     }
 
     function needed()
     {
         // new [what] [name]
-        if(!isset($this->arguments[1])){
-            $this->printLn("missing argument <Type>");
+        if(!isset($this->cli->arguments[1])){
+            $this->cli->printLn("missing argument <Type>");
             return false;
         }
         return true;

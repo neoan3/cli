@@ -7,28 +7,34 @@ namespace Creation;
 use Cli\Cli;
 use Helper\FileHelper;
 
-class App extends Cli
+class App
 {
+    private Cli $cli;
+    function __construct(Cli $cli)
+    {
+        $this->cli = $cli;
+    }
+
     function init()
     {
-        $helper = new FileHelper();
+        $helper = new FileHelper($this->cli);
         // download zip
         $helper->download('https://neoan3.rocks/asset/neoan3-master.zip','app.zip');
         // unpack
         try{
             $helper->unZip('app.zip','');
         } catch (\Exception $e){
-            $helper->printLn("Warning: unable to unpack neoan3-zip");
+            $this->cli->printLn("Warning: unable to unpack neoan3-zip");
         }
         // copy
         $helper->copyDir('neoan3-master','');
         // remove folder
-        $helper->deleteRecursively($this->workPath . '/neoan3-master/');
+        $helper->deleteRecursively($this->cli->workPath . '/neoan3-master/');
         // remove archive
         try{
-            unlink($this->workPath . '/app.zip');
+            unlink($this->cli->workPath . '/app.zip');
         } catch (\Exception $e){
-            $this->printLn("Warning: unable to delete app.zip");
+            $this->cli->printLn("Warning: unable to delete app.zip");
         }
         // rewrite .htaccess
         $this->htaccessRewrite();
@@ -36,9 +42,9 @@ class App extends Cli
     }
     function htaccessRewrite()
     {
-        $htaccess = file_get_contents($this->workPath . '/.htaccess');
+        $htaccess = file_get_contents($this->cli->workPath . '/.htaccess');
         $htaccess = preg_replace('/RewriteBase\s[a-z0-9\/]+$/im','RewriteBase /', $htaccess);
-        file_put_contents($this->workPath . '/.htaccess_', $htaccess);
+        file_put_contents($this->cli->workPath . '/.htaccess_', $htaccess);
     }
 
 }
