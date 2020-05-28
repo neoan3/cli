@@ -39,7 +39,7 @@ class Cli
     {
         switch ($this->arguments[0]){
             case 'new':
-                return new Creation($this);
+                new Creation($this);
         }
     }
 

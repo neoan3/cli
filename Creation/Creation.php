@@ -7,13 +7,16 @@ namespace Creation;
 class Creation
 {
     private \Cli\Cli $cli;
+    public bool $workable = true;
     function __construct(\Cli\Cli $cli)
     {
         $this->cli = $cli;
         if($this->needed()){
             $this->run();
+
+        } else{
+            $this->workable = false;
         }
-        return false;
     }
     function run()
     {

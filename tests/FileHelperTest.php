@@ -7,13 +7,14 @@ use PHPUnit\Framework\TestCase;
 class FileHelperTest extends TestCase
 {
     private FileHelper $instance;
+    private \Cli\Cli $cli;
 
     protected function setUp(): void
     {
-        $cli = new Cli\Cli([],__DIR__. '/mockDrop');
-        $this->instance = new FileHelper($cli);
-        if(!file_exists($cli->workPath)){
-            mkdir($cli->workPath);
+        $this->cli = new Cli\Cli([],__DIR__. '/mockDrop');
+        $this->instance = new FileHelper($this->cli);
+        if(!file_exists($this->cli->workPath)){
+            mkdir($this->cli->workPath);
         }
     }
     static function tearDownAfterClass(): void
@@ -25,40 +26,40 @@ class FileHelperTest extends TestCase
     public function testDownload()
     {
         $this->createMockFile();
-        $this->instance->download(__DIR__ . '/mock.txt', 'download.txt');
-        $this->assertFileExists(__DIR__ . '/download.txt');
+        $this->instance->download($this->cli->workPath . '/mock.txt', 'download.txt');
+        $this->assertFileExists($this->cli->workPath . '/download.txt');
     }
 
     public function testDeleteRecursively()
     {
-        mkdir(__DIR__ . '/deletable');
-        file_put_contents(__DIR__. '/deletable/mock.txt', 'mock2');
-        $this->instance->deleteRecursively(__DIR__ . '/deletable/');
-        $this->assertDirectoryDoesNotExist(__DIR__ . '/deletable');
+        mkdir($this->cli->workPath . '/deletable');
+        file_put_contents($this->cli->workPath. '/deletable/mock.txt', 'mock2');
+        $this->instance->deleteRecursively($this->cli->workPath . '/deletable/');
+        $this->assertDirectoryDoesNotExist($this->cli->workPath . '/deletable');
     }
 
     public function testUnZip()
     {
         $this->createMockFile();
         $z = new ZipArchive();
-        $z->open(__DIR__ . '/zip.zip', ZipArchive::CREATE);
+        $z->open($this->cli->workPath . '/zip.zip', ZipArchive::CREATE);
         $z->addEmptyDir('folder');
-        $z->addFile(__DIR__ . '/mock.txt');
+        $z->addFile($this->cli->workPath . '/mock.txt');
         $z->close();
-        $this->instance->unZip(__DIR__ . '/zip.zip','_zip');
-        $this->assertDirectoryExists(__DIR__ . '/_zip');
+        $this->instance->unZip($this->cli->workPath . '/zip.zip','_zip');
+        $this->assertDirectoryExists($this->cli->workPath . '/_zip');
 
     }
     public function testFailUnZip()
     {
         $this->expectException(\Exception::class);
-        $this->instance->unZip(__DIR__. '/noSuchZip.zip','_zipme');
+        $this->instance->unZip($this->cli->workPath. '/noSuchZip.zip','_zipme');
     }
 
     public function testCopyDir()
     {
 //        $this->createMockFile();
-        $p = __DIR__;
+        $p = $this->cli->workPath;
         if(!file_exists($p . '/_source')){
             mkdir($p . '/_source');
         }
@@ -72,7 +73,7 @@ class FileHelperTest extends TestCase
     }
     private function createMockFile()
     {
-        $mockFile = __DIR__ . '/mock.txt';
+        $mockFile = $this->cli->workPath . '/mock.txt';
         file_put_contents($mockFile,'mock file');
         return $mockFile;
     }

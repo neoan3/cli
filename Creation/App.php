@@ -22,7 +22,7 @@ class App
         $helper->download('https://neoan3.rocks/asset/neoan3-master.zip','app.zip');
         // unpack
         try{
-            $helper->unZip('app.zip','');
+            $helper->unZip($this->cli->workPath . '/app.zip','');
         } catch (\Exception $e){
             $this->cli->printLn("Warning: unable to unpack neoan3-zip");
         }
@@ -44,7 +44,7 @@ class App
     {
         $htaccess = file_get_contents($this->cli->workPath . '/.htaccess');
         $htaccess = preg_replace('/RewriteBase\s[a-z0-9\/]+$/im','RewriteBase /', $htaccess);
-        file_put_contents($this->cli->workPath . '/.htaccess_', $htaccess);
+        file_put_contents($this->cli->workPath . '/.htaccess', $htaccess);
     }
 
 }
