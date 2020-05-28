@@ -11,6 +11,7 @@ class Cli
     public array $arguments = [];
     public array $flags = [];
     public string $workPath;
+    private array $output = [];
 
     function __construct($arguments, $workPath)
     {
@@ -35,11 +36,50 @@ class Cli
     {
         echo $msg . "\n";
     }
+    function displayAcii()
+    {
+        echo "\n" .
+            "::::    ::: :::::::::: ::::::::      :::     ::::    :::  ::::::::  \n" .
+            ":+:+:   :+: :+:       :+:    :+:   :+: :+:   :+:+:   :+: :+:    :+: \n" .
+            ":+:+:+  +:+ +:+       +:+    +:+  +:+   +:+  :+:+:+  +:+        +:+ \n" .
+            "+#+ +:+ +#+ +#++:++#  +#+    +:+ +#++:++#++: +#+ +:+ +#+     +#++:  \n" .
+            "+#+  +#+#+# +#+       +#+    +#+ +#+     +#+ +#+  +#+#+#        +#+ \n" .
+            "#+#   #+#+# #+#       #+#    #+# #+#     #+# #+#   #+#+# #+#    #+# \n" .
+            "###    #### ########## ########  ###     ### ###    ####  ########  \n\n";
+    }
+    function io($execString, $warning = "Warning: Command did not return\n")
+    {
+        exec($execString, $this->output, $return);
+        if (empty($this->output)) {
+            $this->clearOutput();
+            echo $warning;
+            return false;
+        }
+        $this->printOutput();
+        return true;
+    }
+    function clearOutput()
+    {
+        $this->output = [];
+    }
+
+    function printOutput()
+    {
+        foreach ($this->output as $line) {
+            echo $line . "\n";
+        }
+        $this->clearOutput();
+    }
     function run()
     {
         switch ($this->arguments[0]){
             case 'new':
                 new Creation($this);
+                break;
+            case 'develop':
+                $this->displayAcii();
+                $this->io('php -S localhost:8080 _neoan/server.php');
+                break;
         }
     }
 

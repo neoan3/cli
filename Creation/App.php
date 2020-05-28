@@ -18,6 +18,7 @@ class App
     function init()
     {
         $helper = new FileHelper($this->cli);
+        echo "downloading...\n";
         // download zip
         $helper->download('https://neoan3.rocks/asset/neoan3-master.zip','app.zip');
         // unpack
@@ -38,6 +39,8 @@ class App
         }
         // rewrite .htaccess
         $this->htaccessRewrite();
+        echo "Dependencies...";
+        $this->cli->io('composer update');
 
     }
     function htaccessRewrite()
