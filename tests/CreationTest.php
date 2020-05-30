@@ -37,6 +37,7 @@ class CreationTest extends TestCase
     public function test__construct()
     {
         $ok = new Creation(new Cli(['neoan3-cli','new','app'],dirname(__DIR__) .'/playground'));
+        sleep(3);
         $this->assertTrue($ok->workable);
     }
 }
