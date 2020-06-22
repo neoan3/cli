@@ -19,6 +19,7 @@
             <exclude>
                 <directory>./tests</directory>
                 <directory>./vendor</directory>
+                <directory>./Helper/partials</directory>
                 <directory>./playground</directory>
             </exclude>
         </whitelist>

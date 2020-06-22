@@ -213,13 +213,14 @@ The following files are respected:
 
 | template file | entity | variable(s) | Note |
 | --- | --- | --- | --- |
+| frame.php | frame | name  ||
+| model.php | model | name  ||
 | api.php | component (API) | name , frame ||
 | route.php | component (Route) | name , frame ||
 | view.html | component (Route) | name  ||
 | ce.php | Custom element | name  | *PHP files for custom element is only generated if template is present |
 | ce.js | Custom element | name | |
 | ce.html | Custom element | name | |
-| transformer.php | Model transformer | name, structure | *Transformer usage requires neoan3-apps/transformer |
 
 **_Casing:_** By default variables are translated to PascalCase. 
 Depending on your needs, you have the following possibilities for your casing:
