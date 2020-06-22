@@ -38,6 +38,18 @@ class FileHelper
             }
         }
     }
+    public function createDirectory($directory)
+    {
+        $parts = explode('/', $directory);
+        $runner = '';
+        foreach ($parts as $part){
+            $test = $runner . '/' . $part;
+            if(!file_exists($test)){
+                mkdir($test);
+            }
+            $runner = $test . '/';
+        }
+    }
     public function deleteRecursively($target)
     {
         if(is_dir($target)){
