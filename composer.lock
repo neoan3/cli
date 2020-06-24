@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "070dc099a3f7feb5ea2e2254c589322f",
+    "content-hash": "bf8819214c130a5f7c14dd116932e0b7",
     "packages": [
+        {
+            "name": "neoan3-apps/db",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroehrl/neoan3-db.git",
+                "reference": "b2859d08f44b20f8174fabfba51a4e8becec70f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroehrl/neoan3-db/zipball/b2859d08f44b20f8174fabfba51a4e8becec70f0",
+                "reference": "b2859d08f44b20f8174fabfba51a4e8becec70f0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mysqli": "*",
+                "php": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Neoan3\\Apps\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan Roehrl",
+                    "homepage": "http://neoan.us"
+                }
+            ],
+            "description": "neoan3 mysqli class",
+            "time": "2019-09-10T17:54:43+00:00"
+        },
         {
             "name": "neoan3-apps/ops",
             "version": "2.0.0",
@@ -1864,7 +1902,8 @@
     "prefer-lowest": false,
     "platform": {
         "ext-zip": "*",
-        "ext-readline": "*"
+        "ext-readline": "*",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

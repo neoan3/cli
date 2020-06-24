@@ -44,6 +44,8 @@ class Model
         }
         $template = $this->template->substituteVariables($template);
         file_put_contents($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.model.php', $template);
+        file_put_contents($this->folder . '/' . 'migrate.json', "{}");
+
     }
     function controllerExists()
     {

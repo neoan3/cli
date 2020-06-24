@@ -24,7 +24,9 @@
         "ext-zip": "*",
         "neoan3-apps/template": "^1.0",
         "neoan3-apps/ops": "^2.0",
-        "ext-readline": "*"
+        "ext-readline": "*",
+        "ext-json": "*",
+        "neoan3-apps/db": "^0.2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.1"

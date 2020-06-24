@@ -13,7 +13,6 @@ class Creation
         $this->cli = $cli;
         if($this->needed()){
             $this->run();
-
         } else{
             $this->workable = false;
         }

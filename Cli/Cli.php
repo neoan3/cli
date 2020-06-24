@@ -5,6 +5,7 @@ namespace Cli;
 
 
 use Creation\Creation;
+use Migration\Migration;
 
 class Cli
 {
@@ -94,31 +95,71 @@ class Cli
                 $inputBytes .= ord(stream_get_contents(STDIN, 1));
                 // possible inputs
                 switch ($inputBytes){
-                    case '279165': $closure('up'); $wait = false;
+                    case '279165':
+                        $wait = $this->closeStream();
+                        $closure('up');
                         break;
-                    case '279133': $closure('down'); $wait = false;
+                    case '279133':
+                        $wait = $this->closeStream();
+                        $closure('down');
                         break;
                     case '27': // wait
                     case '2791': // wait
                         break;
-                    case '48': $closure(0); $wait = false;
+                    case '48':
+                        $wait = $this->closeStream();
+                        $closure(0);
                         break;
-                    case '49': $closure(1); $wait = false;
+                    case '49':
+                        $wait = $this->closeStream();
+                        $closure(1);
                         break;
-                    case '50': $closure(2); $wait = false;
+                    case '50':
+                        $wait = $this->closeStream();
+                        $closure(2);
                         break;
-                    case '51': $closure(3); $wait = false;
+                    case '51':
+                        $wait = $this->closeStream();
+                        $closure(3);
                         break;
-                    case '52': $closure(4); $wait = false;
+                    case '52':
+                        $wait = $this->closeStream();
+                        $closure(4);
                         break;
-                    case '53': $closure(5); $wait = false;
+                    case '53':
+                        $wait = $this->closeStream();
+                        $closure(5);
+                        break;
+                    case '54':
+                        $wait = $this->closeStream();
+                        $closure(6);
+                        break;
+                    case '55':
+                        $wait = $this->closeStream();
+                        $closure(7);
+                        break;
+                    case '56':
+                        $wait = $this->closeStream();
+                        $closure(8);
+                        break;
+                    case '57':
+                        $wait = $this->closeStream();
+                        $closure(9);
+                        break;
+                    case '120':
+                        $wait = $this->closeStream();
+                        $closure('x');
                         break;
                     case '89':
                     case '121':
-                    case '10': $closure('default'); $wait = false;
+                    case '10':
+                        $wait = $this->closeStream();
+                        $closure('default');
                         break;
                     case '78':
-                    case '110': $closure(false); $wait = false;
+                    case '110':
+                        $wait = $this->closeStream();
+                        $closure(false);
                         break;
 
                 }
@@ -126,18 +167,33 @@ class Cli
 
             }
         }
+
     }
-    function waitForInput($closure) {
+    private function closeStream()
+    {
+        readline_callback_handler_remove();
+        return false;
+    }
+    function waitForInput($closure, $hidden = false) {
+        if($hidden){
+            echo "\033[30;40m";
+        }
         $handle = fopen("php://stdin", "r");
         $line = trim(fgets($handle));
         $closure($line);
         fclose($handle);
+        if($hidden){
+            echo "\033[0m\n";
+        }
     }
     function run()
     {
         switch ($this->arguments[0]){
             case 'new':
                 new Creation($this);
+                break;
+            case 'migrate':
+                new Migration($this);
                 break;
             case 'develop':
 
