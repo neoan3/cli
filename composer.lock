@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf8819214c130a5f7c14dd116932e0b7",
+    "content-hash": "11b9f4d5b7633b9dfdf8c637c61e67d5",
     "packages": [
         {
             "name": "neoan3-apps/db",
