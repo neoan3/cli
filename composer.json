@@ -1,5 +1,7 @@
 {
-    "name": "neoan3/cli",
+    "name": "neoan3/neoan3",
+    "version": "1.0.0",
+    "homepage": "https://neoan3.rocks",
     "description": "official neoan3 cli",
     "type": "library",
     "license": "MIT",
