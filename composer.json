@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "license": "MIT",
     "bin": [
-        "bin/initiate.php"
+        "bin/neoan3"
     ],
     "autoload": {
         "psr-4": {
