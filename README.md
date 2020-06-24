@@ -1,9 +1,8 @@
 # neoan3-cli
-neoan3 CLI helper
+Official neoan3 CLI tool
 
 ## Automate your [neoan3](https://neoan3.rocks) needs
 
-Official neoan3 cli tool 
 
 1. [Requirements](#Requires)
 2. [Installation](#installation)
@@ -12,7 +11,6 @@ Official neoan3 cli tool
     2. [component](#new-component)
     3. [frame](#new-frame)
     4. [model](#new-model)
-    5. [transformer](#new-transformer)
 4. [Installing (third party) scripts](#install)
 5. [Reusing components/frames/models](#add)
 6. [Handling credentials](#credentials)
@@ -25,12 +23,14 @@ Official neoan3 cli tool
     
 
 ### Requires
+- PHP
 - composer
+- GIT
 
 ### Installation
 
 ```  
-composer global require 
+composer global require neoan3/neoan3
 ```
 
 ## Starting a new neoan3 application
@@ -68,33 +68,8 @@ This command generates a new frame.
 
 This command creates a new model.
 
-### new transformer
-`neoan3 new transformer [model-name]`
 
-This command creates a new transformer to an existing model. It is recommended to create a migration before executing this command.
-Don't forget to change the related model accordingly:
-```PHP
-namespace Neoan3\Model;
-
-use Neoan3\Apps\Transformer;
-use Neoan3\Core\RouteException;
-
-/*
- * @method static create($array)
- * @method static find($array)
- * @method static get($id)
- * @method static update($array)
- */
-
-class MyModel extends IndexModel
-{
-    static function __callStatic($name, $arguments)
-    {
-        return Transformer::addMagic($name,$arguments);
-    }
-}
-```
-## install
+## install (not yet implemented)
 
 `neoan3 install [url]`
 
@@ -102,7 +77,7 @@ This command executes external installation scripts in cases where composer cann
 In most cases you want to use "add" instead of "install" to ensure proper collaboration.
 This command is normally used to simplify installation of 3rd party applications.
 
-## add
+## add (not yet implemented)
 `neoan3 add [destination] [package] ([repository-endpoint])`
 
 Adding components makes the following assumptions:
@@ -127,7 +102,7 @@ _example_
 Please note that the name (here: custom-model/products) must be the name of specified in your composer.json of the neoan3-entity.
 See [publish](#publish).
 
-## credentials
+## credentials (not yet implemented)
 
 It is recommended to store static credentials (like smtp, API-tokens etc) outside the web root. 
 This command attempts to mange such credentials in a folder "credentials" (sibling to web root) and a file credentials.json
@@ -149,29 +124,9 @@ Currently supports SQL only.
 
 `neoan3 migrate models [direction]` 
 
-_Credentials_: 
-The tool will memorize your db-credentials (including your password, if confirmed by the user).
-When switching between multiple projects or databases, you may want to flush these credentials.
-The tool will suggest you to do so if a connection cannot be established, but **you** have to understand the implications
-of working with potentially wrong but valid credentials. Therefore, when working with multiple databases or projects,
-the command `neoan3 migrate flush` is recommended. 
-
-NOTE: These credentials are held by neoan3 directly. This does not assume nor require credentials set by [credentials](#credentials)
-
-When working with version control branches, the following workflow is recommended:
-
-- before checking out a different branch, _migrate down_ and commit
-- after checking out a branch, _migrate up_ 
-
-The migration is highly simplified and works in two directions.
-### config
-`neoan3 migrate config`
-
-Displays current local database settings. If no settings are present, the creation process starts.
-
 ### migrate down
 
-`neoan3 migrate models down` OR `neoan3 migrate model [model-name] down`
+`neoan3 migrate models down` 
 
 This generates migrate.jsons from the connected database structure. The following assumptions are made:
 
@@ -181,12 +136,12 @@ The recommended way for neoan3 is to follow a snake_case naming for tables and c
 
 ### migrate up
 
-`neoan3 migrate models up` OR `neoan3 migrate model [model-name] up`
+`neoan3 migrate models up` 
 
 This creates or alters tables in your connected database based on structural declarations present in your migrate.json files in the folder of models.
 It is important to know that removing a column in your declaration will NOT remove the column from the database, while adding a column will generate the column in your database.
 
-## publish
+## publish (not yet implemented)
 
 `publish [entity-type] [entity-name]`
 
@@ -252,4 +207,3 @@ If you are interested, please fel free to get in touch @ https://github.com/sroe
 ## Contributors
 [sroehrl](https://github.com/sroehrl)
 
-[Rhuancpq](https://github.com/Rhuancpq)
