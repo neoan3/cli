@@ -26,7 +26,6 @@ class Cli
     {
 
         $this->workPath = $workPath;
-        var_dump($workPath);
         array_shift($arguments);
         $this->argumentConstructor($arguments);
     }
@@ -81,11 +80,14 @@ class Cli
         }
         $this->clearOutput();
     }
+
     function waitForSingleInput($closure)
     {
-        if(function_exists('readline_callback_handler_install')){
-            readline_callback_handler_install('', function() { });
-        } 
+        if(!function_exists('readline_callback_handler_install')){
+            $this->waitForInput($closure);
+            return;
+        }
+        readline_callback_handler_install('', function() { });
         $wait = true;
         $inputBytes = '';
         while ($wait) {
@@ -166,8 +168,6 @@ class Cli
                         break;
 
                 }
-
-
             }
         }
 

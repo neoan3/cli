@@ -43,10 +43,8 @@ class FileHelper
         $parts = explode('/', $directory);
         $runner = '';
         foreach ($parts as $i => $part){
-            var_dump($part);
             $test = $runner . (strpos($part, ':') === false ? '/' : '') . $part;
             if(!file_exists($test)){
-                var_dump($test);
                 mkdir($test);
             }
             $runner = $test . '/';
