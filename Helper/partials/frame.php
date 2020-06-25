@@ -28,12 +28,7 @@ class {{name}} extends Serve
         /*
         // example DB implementation
         try{
-            \Neoan3\Apps\Db::setEnvironment([
-                'name' => 'YOUR_DB_NAME',
-                'host' => 'localhost',
-                'user' => 'root',
-                'password' => '',
-            ]);
+            \Neoan3\Apps\Db::setEnvironment(getCredentials()['your_db_credentials']);
         } catch (\Neoan3\Apps\DbException $e){
             echo "Failed to initiate database connection";
             die();

@@ -80,8 +80,13 @@ class Cli
         }
         $this->clearOutput();
     }
+
     function waitForSingleInput($closure)
     {
+        if(!function_exists('readline_callback_handler_install')){
+            $this->waitForInput($closure);
+            return;
+        }
         readline_callback_handler_install('', function() { });
         $wait = true;
         $inputBytes = '';
@@ -163,15 +168,16 @@ class Cli
                         break;
 
                 }
-
-
             }
         }
 
     }
     private function closeStream()
     {
-        readline_callback_handler_remove();
+        if(function_exists('readline_callback_handler_remove')){
+            readline_callback_handler_remove();
+        }
+        
         return false;
     }
     function waitForInput($closure, $hidden = false) {
