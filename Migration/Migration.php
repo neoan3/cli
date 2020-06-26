@@ -147,7 +147,7 @@ class Migration
     function sqlRow($columnKey, $columnValue)
     {
         $sql = "\t`$columnKey`\t{$columnValue['type']}\t";
-        $sql .= $columnValue['default'] ? 'default \'' . $columnValue['default'] . '\'' : '';
+        $sql .= $columnValue['default'] ? 'default ' . $this->defaultQuotes($columnValue['type'], $columnValue['default']) : '';
         $sql .= "\t" . (!$columnValue['nullable'] ? 'not null' : 'null');
         $sql .= "\t" . ($columnValue['key'] === 'primary' ? 'primary key' : '');
         $sql .= ",\n";
@@ -199,6 +199,14 @@ class Migration
 
         }
         $this->knownTables = $db;
+    }
+    private function defaultQuotes($type, $value)
+    {
+        if(preg_match('/enum|varchar|text|longtext|mediumtext/', $type) === 1){
+            return '"' . $value . '"';
+        } else {
+            return $value;
+        }
     }
 
 }
