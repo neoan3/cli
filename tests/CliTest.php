@@ -22,7 +22,7 @@ class CliTest extends TestCase
     public function testColors()
     {
         $cli = new Cli([], __DIR__);
-        $this->expectOutputString("\e[32ma");
+        $this->expectOutputRegex("/\e\[32ma/");
         $cli->printLn('a', 'green');
     }
 }
