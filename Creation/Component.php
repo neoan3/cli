@@ -106,7 +106,7 @@ class Component
             $this->cli->printLn($frames[$i] . "  [$i]" . ($i < 1 ? ' (default)' : ''), 'magenta');
         }
         $this->cli->waitForSingleInput(function ($input) use ($frames) {
-            if ($input !== '') {
+            if ($input === '') {
                 $input = 0;
             }
             $this->frame = $frames[(int)$input];
