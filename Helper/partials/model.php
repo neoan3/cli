@@ -8,12 +8,12 @@ namespace Neoan3\Model;
  * @package Neoan3\Model
  */
 
-class {{name}} extends IndexModel{
+class {{name}}Model extends IndexModel{
     /**
      * @param $id
      * @return mixed
      */
-    function get(string $id)
+    static function get(string $id)
     {
         return [];
     }
@@ -21,7 +21,7 @@ class {{name}} extends IndexModel{
      * @param $condition
      * @return mixed
      */
-    function find(array $condition)
+    static function find(array $condition)
     {
         return [];
     }
@@ -29,7 +29,7 @@ class {{name}} extends IndexModel{
      * @param $id
      * @return mixed
      */
-    function delete(string $id)
+    static function delete(string $id)
     {
         return [];
     }
