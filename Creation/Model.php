@@ -30,7 +30,7 @@ class Model
             $this->cli->printLn('neoan3 new model <modelName>');
             return;
         }
-        if($this->controllerExists()){
+        if($this->modelExists()){
             return;
         }
         $this->fileHelper->createDirectory($this->folder);
@@ -47,9 +47,9 @@ class Model
         file_put_contents($this->folder . '/' . 'migrate.json', "{}");
 
     }
-    function controllerExists()
+    function modelExists()
     {
-        if(file_exists($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.ctrl.php')){
+        if(file_exists($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.model.php')){
             $this->cli->printLn('Component already exists', 'red');
             return true;
         }
