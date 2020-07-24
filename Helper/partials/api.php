@@ -21,4 +21,14 @@ class {{name}} extends {{frame.pascal}}{
     {
         return $params;
     }
+
+    /**
+     * POST: api.v1/{{name.kebab}}
+     * @param $body
+     * @return array
+     */
+    function post{{name.pascal}}(array $body): array
+    {
+        return $params;
+    }
 }
