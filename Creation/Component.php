@@ -133,7 +133,10 @@ class Component
     }
     function writeApi()
     {
-        $this->askForFrame();
+        if(!$this->frame){
+            $this->askForFrame();
+        }
+
         $template = $this->template->readTemplate('api.php');
         if (!$template) {
             $template = file_get_contents(dirname(__DIR__) . '/Helper/partials/api.php');
@@ -149,12 +152,15 @@ class Component
     {
         $template = $this->template->readTemplate('route.php');
         if (!$template) {
-            $this->cli->printLn("Use a frame? [Y/n]", 'green');
-            $this->cli->waitForSingleInput(function ($input) {
-                if ($input !== 'n' && $input !== 'no') {
-                    $this->askForFrame();
-                }
-            });
+            if(!$this->frame){
+                $this->cli->printLn("Use a frame? [Y/n]", 'green');
+                $this->cli->waitForSingleInput(function ($input) {
+                    if ($input !== 'n' && $input !== 'no') {
+                        $this->askForFrame();
+                    }
+                });
+            }
+
             $routePartial = file_get_contents(dirname(__DIR__) . '/Helper/partials/route.php');
             $extends = 'Neoan3\Core\Unicore';
             $extended = 'Unicore';
@@ -186,13 +192,16 @@ class Component
     function parseFlags()
     {
         foreach ($this->cli->flags as $flag) {
-            preg_match('/(.)[a-z]*(:)*([a-z]*)/', $flag, $matches);
+            preg_match('/(.)[a-z]*(:)*([a-zA-Z0-9]*)/', $flag, $matches);
             if (isset($matches[1])) {
                 if ($matches[1] == 't') {
                     $this->type = $matches[3];
                 }
                 if ($matches[1] == 'v') {
                     $this->view = $matches[3] !== 'no';
+                }
+                if($matches[1] == 'f') {
+                    $this->frame = Ops::toPascalCase($matches[3]);
                 }
             }
         }
