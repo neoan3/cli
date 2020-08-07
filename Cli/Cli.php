@@ -198,6 +198,9 @@ class Cli
             case 'new':
                 new Creation($this);
                 break;
+            case 'test':
+                $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
+                break;
             case 'migrate':
                 new Migration($this);
                 break;
