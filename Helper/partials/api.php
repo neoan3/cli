@@ -29,6 +29,6 @@ class {{name}} extends {{frame.pascal}}{
      */
     function post{{name.pascal}}(array $body): array
     {
-        return $params;
+        return $body;
     }
 }
