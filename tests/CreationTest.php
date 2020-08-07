@@ -21,6 +21,7 @@ class CreationTest extends TestCase
         $h = new Helper\FileHelper(new Cli([],dirname(__DIR__)));
         if(file_exists(dirname(__DIR__).'/playground')){
             unlink(dirname(__DIR__).'/playground/.htaccess');
+            unlink(dirname(__DIR__).'/playground/.travis.yml');
             $h->deleteRecursively(dirname(__DIR__).'/playground');
         }
 
