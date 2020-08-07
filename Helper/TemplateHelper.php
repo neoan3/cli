@@ -57,21 +57,26 @@ class TemplateHelper
     }
     public function substituteVariables($template, $additionalVariables= [])
     {
-        $name = $this->cli->arguments[2];
-        $variables = [
-            'name' => Ops::toPascalCase($name),
-            'name.lower' => strtolower($name),
-            'name.camel' => Ops::toCamelCase($name),
-            'name.kebab' => Ops::toKebabCase($name),
-            'name.pascal' => Ops::toPascalCase($name)
-        ];
-        $variables = array_merge($variables, $additionalVariables);
-        foreach ($variables as $key => $variable){
+        if(!isset($additionalVariables['name'])){
+            $additionalVariables['name'] = $this->cli->arguments[2];
+        }
+        $this->generateCases($additionalVariables);
+        foreach ($additionalVariables as $key => $variable){
             $pattern = '/{{'. $key .'}}/';
             $template = preg_replace($pattern, $variable, $template);
         }
         return $template;
     }
+    function generateCases(&$variableArray)
+    {
+        foreach ($variableArray as $key => $value){
+            $variableArray[$key . '.lower'] = strtolower($value);
+            $variableArray[$key . '.camel'] = Ops::toCamelCase($value);
+            $variableArray[$key . '.kebab'] = Ops::toKebabCase($value);
+            $variableArray[$key . '.pascal'] = Ops::toPascalCase($value);
+        }
+    }
+
     function parseFlags()
     {
 
