@@ -21,7 +21,7 @@ class Frame
         $this->cli = $cli;
         $this->fileHelper = new FileHelper($cli);
         $this->template = new TemplateHelper($cli);
-        $this->folder = $this->cli->workPath . '/frame/' . Ops::toCamelCase($this->cli->arguments[2]);
+
     }
     function init()
     {
@@ -30,6 +30,7 @@ class Frame
             $this->cli->printLn('neoan3 new frame <frameName>');
             return;
         }
+        $this->folder = $this->cli->workPath . '/frame/' . Ops::toCamelCase($this->cli->arguments[2]);
         if($this->frameExists()){
             return;
         }
