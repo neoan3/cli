@@ -31,6 +31,6 @@
         "neoan3-apps/db": "^0.2.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.1"
+        "phpunit/phpunit": "^9.3"
     }
 }

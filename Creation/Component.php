@@ -25,7 +25,6 @@ class Component
         $this->cli = $cli;
         $this->fileHelper = new FileHelper($cli);
         $this->template = new TemplateHelper($cli);
-        $this->folder = $this->cli->workPath . '/component/' . Ops::toCamelCase($this->cli->arguments[2]);
     }
 
     function init()
@@ -35,6 +34,7 @@ class Component
             $this->cli->printLn('Malformed command. Expected format:', 'red');
             $this->cli->printLn('neoan3 new component <componentName>');
         } else {
+            $this->folder = $this->cli->workPath . '/component/' . Ops::toCamelCase($this->cli->arguments[2]);
             if($this->controllerExists()){
                 return;
             }

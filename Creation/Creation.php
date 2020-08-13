@@ -12,7 +12,7 @@ class Creation
     {
         $this->cli = $cli;
         if($this->needed()){
-            if(!in_array($this->cli->arguments[1],['component','frame', 'model', 'app'])){
+            if(!in_array($this->cli->arguments[1],['component','frame', 'model', 'app', 'test'])){
                 $this->cli->printLn('Unknown command', 'red');
                 exit();
             }

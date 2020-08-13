@@ -21,7 +21,7 @@ class Model
         $this->cli = $cli;
         $this->fileHelper = new FileHelper($cli);
         $this->template = new TemplateHelper($cli);
-        $this->folder = $this->cli->workPath . '/model/' . Ops::toCamelCase($this->cli->arguments[2]);
+
     }
     function init()
     {
@@ -30,6 +30,7 @@ class Model
             $this->cli->printLn('neoan3 new model <modelName>');
             return;
         }
+        $this->folder = $this->cli->workPath . '/model/' . Ops::toCamelCase($this->cli->arguments[2]);
         if($this->modelExists()){
             return;
         }
@@ -50,7 +51,7 @@ class Model
     function modelExists()
     {
         if(file_exists($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.model.php')){
-            $this->cli->printLn('Component already exists', 'red');
+            $this->cli->printLn('Model already exists', 'red');
             return true;
         }
         return false;
