@@ -53,7 +53,7 @@ class CredentialHelper
     {
         $this->cli->printLn('What is the name of this property?');
         $this->cli->waitForInput(function($input){
-            $this->credentials[$this->currentCredentialName] = $input;
+            $this->credentials[$this->currentCredentialName][$input] = false;
             $this->addCredentialValue($input);
             $this->cli->printLn('Add another property? [Y/n]', 'green');
             $this->cli->waitForSingleInput(function ($input){
