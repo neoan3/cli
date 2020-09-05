@@ -12,6 +12,14 @@ class MockCli extends \Cli\Cli
     function waitForSingleInput($callback)
     {
         $result =  $this->inputArray[$this->inputStep];
+        echo "-> $result\n";
+        $this->inputStep++;
+        $callback($result);
+    }
+    function waitForInput($callback, $hidden = false)
+    {
+        $result =  $this->inputArray[$this->inputStep];
+        echo "-> $result\n";
         $this->inputStep++;
         $callback($result);
     }

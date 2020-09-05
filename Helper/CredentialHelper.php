@@ -47,13 +47,18 @@ class CredentialHelper
     function saveCredentials()
     {
         $path = DIRECTORY_SEPARATOR .'credentials'.DIRECTORY_SEPARATOR.'credentials.json';
-        file_put_contents($path, json_encode($this->credentials));
+        if(is_writeable($path)){
+            file_put_contents($path, json_encode($this->credentials));
+        }
+        else {
+            $this->cli->printLn('Failed to store credentials: permission denied for ' . $path, 'red');
+        }
     }
     function addCredentialKey()
     {
         $this->cli->printLn('What is the name of this property?');
         $this->cli->waitForInput(function($input){
-            $this->credentials[$this->currentCredentialName] = $input;
+            $this->credentials[$this->currentCredentialName][$input] = false;
             $this->addCredentialValue($input);
             $this->cli->printLn('Add another property? [Y/n]', 'green');
             $this->cli->waitForSingleInput(function ($input){

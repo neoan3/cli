@@ -27,7 +27,9 @@ class SqlHelper
             $tables = [];
             $call = Db::ask(">SHOW tables");
             foreach ($call as $table){
-                $tables[] = $table['Tables_in_'.$this->usedCredentials['name']];
+                if(isset($table['Tables_in_'.$this->usedCredentials['name']])){
+                    $tables[] = $table['Tables_in_'.$this->usedCredentials['name']];
+                }
             }
             return $tables;
         } catch (DbException $e){
