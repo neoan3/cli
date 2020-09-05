@@ -47,7 +47,12 @@ class CredentialHelper
     function saveCredentials()
     {
         $path = DIRECTORY_SEPARATOR .'credentials'.DIRECTORY_SEPARATOR.'credentials.json';
-        file_put_contents($path, json_encode($this->credentials));
+        if(is_writeable($path)){
+            file_put_contents($path, json_encode($this->credentials));
+        }
+        else {
+            $this->cli->printLn('Failed to store credentials: permission denied for ' . $path, 'red');
+        }
     }
     function addCredentialKey()
     {
