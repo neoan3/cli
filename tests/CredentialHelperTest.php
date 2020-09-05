@@ -34,10 +34,10 @@ class CredentialHelperTest extends TestCase
         // write
         $h = new CredentialHelper($mock);
         $h->createNew();
-        $c = $h->readCredentials();
-        $this->assertIsArray($c);
-        $this->assertArrayHasKey('cli-test-credentials', $c);
-        $this->assertArrayHasKey('test-property', $c['cli-test-credentials']);
-        $this->assertEquals('test-value',$c['cli-test-credentials']['test-property']);
+        $credentials = $h->credentials;
+        $this->assertIsArray($credentials);
+        $this->assertArrayHasKey('cli-test-credentials', $credentials);
+        $this->assertArrayHasKey('test-property', $credentials['cli-test-credentials']);
+        $this->assertEquals('test-value',$credentials['cli-test-credentials']['test-property']);
     }
 }
