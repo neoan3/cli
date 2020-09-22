@@ -46,12 +46,18 @@ class CredentialHelper
     }
     function saveCredentials()
     {
-        $path = DIRECTORY_SEPARATOR .'credentials'.DIRECTORY_SEPARATOR.'credentials.json';
+        // guess OS
+        $vars = getenv();
+        $systemPath = isset($vars['Path']) ? $vars['Path'] : (isset($vars['PATH']) ? $vars['PATH'] : '');
+        preg_match('/^[A-Z]:/', $systemPath, $matches);
+
+        $path = $matches[0] . DIRECTORY_SEPARATOR .'credentials'.DIRECTORY_SEPARATOR.'credentials.json';
         if(is_writeable($path)){
             file_put_contents($path, json_encode($this->credentials));
         }
         else {
             $this->cli->printLn('Failed to store credentials: permission denied for ' . $path, 'red');
+            $this->cli->printLn('Please ensure the folder is writable. ', 'red');
         }
     }
     function addCredentialKey()

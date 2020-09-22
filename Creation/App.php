@@ -6,6 +6,7 @@ namespace Creation;
 
 use Cli\Cli;
 use Helper\FileHelper;
+use Helper\TemplateHelper;
 
 class App
 {
@@ -39,6 +40,8 @@ class App
         }
         // rewrite .htaccess
         $this->htaccessRewrite();
+        // write readme
+        $this->writeReadme();
         echo "Dependencies...";
         $this->cli->io('composer update');
 
@@ -48,6 +51,11 @@ class App
         $htaccess = file_get_contents($this->cli->workPath . '/.htaccess');
         $htaccess = preg_replace('/RewriteBase\s[a-z0-9\/]+$/im','RewriteBase /', $htaccess);
         file_put_contents($this->cli->workPath . '/.htaccess', $htaccess);
+    }
+    function writeReadme()
+    {
+        $template = file_get_contents(dirname(__DIR__) . '/Helper/partials/README.md');
+        file_put_contents($this->cli->workPath . '/readme.md', $template);
     }
 
 }
