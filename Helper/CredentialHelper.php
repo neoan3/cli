@@ -51,7 +51,7 @@ class CredentialHelper
         $systemPath = isset($vars['Path']) ? $vars['Path'] : (isset($vars['PATH']) ? $vars['PATH'] : '');
         preg_match('/^[A-Z]:/', $systemPath, $matches);
 
-        $path = $matches[0] . DIRECTORY_SEPARATOR .'credentials'.DIRECTORY_SEPARATOR.'credentials.json';
+        $path = (isset($matches[0]) ? $matches[0] : '') . DIRECTORY_SEPARATOR .'credentials'.DIRECTORY_SEPARATOR.'credentials.json';
         if(is_writeable($path)){
             file_put_contents($path, json_encode($this->credentials));
         }
