@@ -79,15 +79,6 @@ class TemplateHelper
 
     function parseFlags()
     {
-
-        foreach ($this->cli->flags as $flag)
-        {
-            preg_match('/(.)[a-z]*(:)*([a-z]*)/', $flag, $matches);
-            if(isset($matches[1])){
-                if($matches[1] == 'v'){
-                    $this->view = $matches[3] !== 'no';
-                }
-            }
-        }
+        $this->view = isset($this->cli->flags['v']) ? $this->cli->flags['v'] !== 'no' : null;
     }
 }

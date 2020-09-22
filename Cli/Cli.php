@@ -32,10 +32,9 @@ class Cli
     private function argumentConstructor($arguments)
     {
         foreach ($arguments as $arg){
-            preg_match('/^-{1,2}[a-z0-9]+/i', $arg, $matches);
-
-            if(!empty($matches)){
-                $this->flags[] = preg_replace('/-/', '', $arg);
+            preg_match('/^-{1,2}([a-z0-9]+):*([a-z0-9]*)/i', $arg, $matches);
+            if(!empty($matches[1])){
+                $this->flags[$matches[1]] = !empty($matches[2]) ? $matches[2] : true;
             } else {
                 $this->arguments[] = $arg;
             }
@@ -194,6 +193,15 @@ class Cli
     }
     function run()
     {
+
+        if(array_search('v', $this->flags )){
+            var_dump($this->flags);
+            $this->io('composer show neoan3/neoan3');
+        }
+        if(!isset($this->arguments[0])){
+            $this->displayAscii();
+            return;
+        }
         switch ($this->arguments[0]){
             case 'new':
                 new Creation($this);
@@ -212,6 +220,9 @@ class Cli
                 $this->printLn('Starting development server. Press Ctrl+C / Command+C to quit.');
                 $this->io('php -S localhost:8080 _neoan/server.php');
                 break;
+            default:
+                $this->printLn('Unknown command' , 'red');
+                $this->printLn('See https://github.com/neoan3/cli' , 'red');
         }
     }
 
