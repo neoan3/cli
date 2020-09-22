@@ -195,8 +195,11 @@ class Cli
     {
 
         if(array_search('v', $this->flags )){
-            var_dump($this->flags);
-            $this->io('composer show neoan3/neoan3');
+            exec('composer global show neoan3/neoan3 -f json', $output, $return);
+            $package = json_decode(implode('',$output), true);
+            $this->printLn("Version: " . $package['versions'][0], 'magenta');
+            $this->printLn("Docs: " . $package['homepage'], 'magenta');
+            exit();
         }
         if(!isset($this->arguments[0])){
             $this->displayAscii();
