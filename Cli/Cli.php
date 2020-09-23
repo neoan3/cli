@@ -6,6 +6,7 @@ namespace Cli;
 
 use Creation\Creation;
 use Migration\Migration;
+use Set\Set;
 
 class Cli
 {
@@ -212,11 +213,13 @@ class Cli
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
                 break;
+            case 'set':
+                new Set($this);
+                break;
             case 'migrate':
                 new Migration($this);
                 break;
             case 'develop':
-
                 $this->displayAscii();
                 $this->printLn('Build something amazing today!', 'green');
                 $this->printLn('##############################', 'green');
