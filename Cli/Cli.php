@@ -6,6 +6,7 @@ namespace Cli;
 
 use Creation\Creation;
 use Migration\Migration;
+use Set\Set;
 
 class Cli
 {
@@ -195,8 +196,11 @@ class Cli
     {
 
         if(array_search('v', $this->flags )){
-            var_dump($this->flags);
-            $this->io('composer show neoan3/neoan3');
+            exec('composer global show neoan3/neoan3 -f json', $output, $return);
+            $package = json_decode(implode('',$output), true);
+            $this->printLn("Version: " . $package['versions'][0], 'magenta');
+            $this->printLn("Docs: " . $package['homepage'], 'magenta');
+            exit();
         }
         if(!isset($this->arguments[0])){
             $this->displayAscii();
@@ -209,11 +213,13 @@ class Cli
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
                 break;
+            case 'set':
+                new Set($this);
+                break;
             case 'migrate':
                 new Migration($this);
                 break;
             case 'develop':
-
                 $this->displayAscii();
                 $this->printLn('Build something amazing today!', 'green');
                 $this->printLn('##############################', 'green');

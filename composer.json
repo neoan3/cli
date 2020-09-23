@@ -13,6 +13,7 @@
             "Creation\\": "Creation",
             "Migration\\": "Migration",
             "Cli\\": "Cli",
+            "Set\\": "Set",
             "Helper\\": "Helper"
         }
     },
