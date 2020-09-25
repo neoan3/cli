@@ -62,7 +62,7 @@ class Migration
         }
         $this->cli->printLn('[x] create new credentials', 'yellow');
         $this->cli->waitForSingleInput(function ($input) use ($credentials) {
-            if ($input === 'x') {
+            if ($input === 'x' || $input === '') {
                 $this->cli->printLn('');
                 $this->credentialHelper->createNew([
                     'host' => 'localhost',

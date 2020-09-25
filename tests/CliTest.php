@@ -17,7 +17,7 @@ class CliTest extends TestCase
     public function testArgumentConstructor()
     {
         $cli = new Cli(['','-flag'], __DIR__);
-        $this->assertEquals('flag', $cli->flags[0]);
+        $this->assertArrayHasKey('flag', $cli->flags);
     }
     public function testColors()
     {

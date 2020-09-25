@@ -191,20 +191,9 @@ class Component
 
     function parseFlags()
     {
-        foreach ($this->cli->flags as $flag) {
-            preg_match('/(.)[a-z]*(:)*([a-zA-Z0-9]*)/', $flag, $matches);
-            if (isset($matches[1])) {
-                if ($matches[1] == 't') {
-                    $this->type = $matches[3];
-                }
-                if ($matches[1] == 'v') {
-                    $this->view = $matches[3] !== 'no';
-                }
-                if($matches[1] == 'f') {
-                    $this->frame = Ops::toPascalCase($matches[3]);
-                }
-            }
-        }
+        $this->type = $this->cli->flags['t'] ?? null;
+        $this->frame = isset($this->cli->flags['f']) ? Ops::toPascalCase($this->cli->flags['f']) : null;
+        $this->view = isset($this->cli->flags['v']) ? $this->cli->flags['v'] !== 'no' : null;
     }
     function controllerExists()
     {

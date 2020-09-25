@@ -6,6 +6,7 @@ namespace Cli;
 
 use Creation\Creation;
 use Migration\Migration;
+use Set\Set;
 
 class Cli
 {
@@ -32,10 +33,9 @@ class Cli
     private function argumentConstructor($arguments)
     {
         foreach ($arguments as $arg){
-            preg_match('/^-{1,2}[a-z0-9]+/i', $arg, $matches);
-
-            if(!empty($matches)){
-                $this->flags[] = preg_replace('/-/', '', $arg);
+            preg_match('/^-{1,2}([a-z0-9]+):*([a-z0-9]*)/i', $arg, $matches);
+            if(!empty($matches[1])){
+                $this->flags[$matches[1]] = !empty($matches[2]) ? $matches[2] : true;
             } else {
                 $this->arguments[] = $arg;
             }
@@ -194,6 +194,18 @@ class Cli
     }
     function run()
     {
+
+        if(array_search('v', $this->flags )){
+            exec('composer global show neoan3/neoan3 -f json', $output, $return);
+            $package = json_decode(implode('',$output), true);
+            $this->printLn("Version: " . $package['versions'][0], 'magenta');
+            $this->printLn("Docs: " . $package['homepage'], 'magenta');
+            exit();
+        }
+        if(!isset($this->arguments[0])){
+            $this->displayAscii();
+            return;
+        }
         switch ($this->arguments[0]){
             case 'new':
                 new Creation($this);
@@ -201,17 +213,22 @@ class Cli
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
                 break;
+            case 'set':
+                new Set($this);
+                break;
             case 'migrate':
                 new Migration($this);
                 break;
             case 'develop':
-
                 $this->displayAscii();
                 $this->printLn('Build something amazing today!', 'green');
                 $this->printLn('##############################', 'green');
                 $this->printLn('Starting development server. Press Ctrl+C / Command+C to quit.');
                 $this->io('php -S localhost:8080 _neoan/server.php');
                 break;
+            default:
+                $this->printLn('Unknown command' , 'red');
+                $this->printLn('See https://github.com/neoan3/cli' , 'red');
         }
     }
 
