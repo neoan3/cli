@@ -6,7 +6,6 @@ namespace Creation;
 
 use Cli\Cli;
 use Helper\FileHelper;
-use Helper\TemplateHelper;
 
 class App
 {
@@ -21,7 +20,7 @@ class App
         $helper = new FileHelper($this->cli);
         echo "downloading...\n";
         // download zip
-        $helper->download('https://neoan3.rocks/asset/neoan3-master.zip','app.zip');
+        $helper->download('https://github.com/sroehrl/neoan3/archive/master.zip','app.zip');
         // unpack
         try{
             $helper->unZip($this->cli->workPath . '/app.zip','');
