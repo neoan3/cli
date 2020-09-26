@@ -60,6 +60,7 @@ class CredentialHelper
             $this->cli->printLn('Please ensure the folder is writable. ', 'red');
         }
     }
+
     function addCredentialKey()
     {
         $this->cli->printLn('What is the name of this property?');

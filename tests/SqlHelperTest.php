@@ -4,6 +4,7 @@
 use Helper\SqlHelper;
 use PHPUnit\Framework\TestCase;
 require_once 'MockCli.php';
+require_once 'MockDatabaseWrapper.php';
 
 class SqlHelperTest extends TestCase
 {
@@ -15,7 +16,12 @@ class SqlHelperTest extends TestCase
 
     public function testDatabaseTables()
     {
-        $c = new SqlHelper(['name'=>'any', 'password'=>'1234']);
+        $tables = [
+            [
+                'Tables_in_cli_test_db' => 'test'
+            ]
+        ];
+        $c = new SqlHelper(['name'=>'any', 'password'=>'1234'], new MockDatabaseWrapper($tables));
         $a = $c->databaseTables();
         $this->assertIsArray($a);
         $this->assertEmpty($a);
@@ -25,8 +31,8 @@ class SqlHelperTest extends TestCase
 
     public function testDescribeTable()
     {
-        // run DB in debug mode
-        $c = new SqlHelper(['name'=>'any', 'password'=>'1234']);
+        // user real DB, run in debug
+        $c = new SqlHelper(['name'=>'any', 'password'=>'1234'], new \Migration\DatabaseWrapper());
         $a = $c->describeTable('dummy');
         $this->assertSame('DESCRIBE `dummy`', $a['sql']);
     }
