@@ -17,15 +17,19 @@ class CredentialsTest extends TestCase
         $cli = new MockCli(['neoan3', 'credentials'], $this->workPath);
         $c = new Credentials($cli);
         $cli->addInput('x');
+        $cli->addInput('demo-credentials-testing');
         $cli->addInput('');
         $c->chooseCredentials(['some'=>'value']);
-        $this->expectOutputRegex('/Listing values/');
+        $this->expectOutputRegex('/Choose credentials/');
     }
 
     public function testDisplayCredentials()
     {
         $cli = new MockCli(['neoan3', 'credentials'], $this->workPath);
         $c = new Credentials($cli);
+        $c->currentCredentials = [
+            'key' => 'value'
+        ];
         $cli->addInput('x');
         $c->displayCredentials();
         $this->expectOutputRegex('/Listing values/');
