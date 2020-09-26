@@ -2,12 +2,14 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/Creation" isTestSource="false" packagePrefix="Creation\" />
-      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/Cli" isTestSource="false" packagePrefix="Cli\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Set" isTestSource="false" packagePrefix="Set\" />
+      <sourceFolder url="file://$MODULE_DIR$/Credentials" isTestSource="false" packagePrefix="Credentials\" />
       <sourceFolder url="file://$MODULE_DIR$/Migration" isTestSource="false" packagePrefix="Migration\" />
       <sourceFolder url="file://$MODULE_DIR$/Helper" isTestSource="false" packagePrefix="Helper\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Creation" isTestSource="false" packagePrefix="Creation\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />

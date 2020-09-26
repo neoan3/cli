@@ -14,7 +14,8 @@
             "Migration\\": "Migration",
             "Cli\\": "Cli",
             "Set\\": "Set",
-            "Helper\\": "Helper"
+            "Helper\\": "Helper",
+            "Credentials\\": "Credentials"
         }
     },
     "authors": [

@@ -5,6 +5,8 @@ namespace Cli;
 
 
 use Creation\Creation;
+use Credentials\Credentials;
+use Migration\DatabaseWrapper;
 use Migration\Migration;
 use Set\Set;
 
@@ -217,7 +219,12 @@ class Cli
                 new Set($this);
                 break;
             case 'migrate':
-                new Migration($this);
+                new Migration($this, new DatabaseWrapper());
+                break;
+            case 'credentials':
+                $c = new Credentials($this);
+                $c->chooseCredentials();
+                $c->displayCredentials();
                 break;
             case 'develop':
                 $this->displayAscii();
