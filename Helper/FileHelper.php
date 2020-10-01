@@ -14,10 +14,19 @@ class FileHelper
         $this->cli = $cli;
     }
 
+    /**
+     * @param $source
+     * @param $destination
+     * @throws \Exception
+     */
     public function download($source, $destination)
     {
         $file = file_get_contents($source);
-        file_put_contents($this->cli->workPath . '/' . $destination, $file);
+        if(!$file){
+            throw new \Exception('Could not fetch package');
+        } else {
+            file_put_contents($this->cli->workPath . '/' . $destination, $file);
+        }
     }
     public function unZip($source, $destination)
     {
