@@ -54,7 +54,7 @@ please omit the last parameter. **Deployment**: It is likely that you will have 
 In most cases, changing the RewriteBase should be enough.
 
 ### new component
-`neoan3 new component [component-name]`
+`neoan3 new component [component-name] [-v:version]`
 
 This command will guide you through the creation of a new component, prefilling the controller according to your choices.
 - api (generates get & post functions using a particular frame)
@@ -105,19 +105,18 @@ _example_
 Please note that the name (here: custom-model/products) must be the name of specified in your composer.json of the neoan3-entity.
 See [publish](#publish).
 
-## credentials (not yet implemented)
+## credentials
 
 It is recommended to store static credentials (like smtp, API-tokens etc) outside the web root. 
-This command attempts to mange such credentials in a folder "credentials" (sibling to web root) and a file credentials.json
+This command attempts to mange such credentials in a folder "credentials" and a file credentials.json
 
 `neoan3 credentials` 
 
 In its most simplistic form, a neoan3 implementation could look like this (in a frame):
 ```PHP
-$credentialFile = dirname(dirname(path)) . '/credentials/credentials.json';
-if(file_exists($credentialFile)) {
-    $this->credentials = json_decode(file_get_contents($credentialFile), true);
-}
+$credentials = getCredentials();
+// e.g. sendgrid
+$sendgridCredentials = $credentials['sendgrid'];
 ```
 
 

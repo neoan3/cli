@@ -25,32 +25,39 @@ class Test
     function init()
     {
         if (!$this->validate()) {
-            return true;
+            return;
         }
         $this->getMethods();
         $fileName = $this->folder . '/' . Ops::toPascalCase($this->cli->arguments[3]) . 'Test.php';
         if(file_exists($fileName)){
             $this->cli->printLn('Test already exists', 'red');
-            return true;
+            return;
         }
 
         $partials = dirname(__DIR__) . '/Helper/partials/';
-        $template = file_get_contents($partials . 'test.php');
         $vars = [
-            'name' => $this->cli->arguments[3],
+            'name' => Ops::toPascalCase($this->cli->arguments[3]),
             'methods' => ''
         ];
-        foreach ($this->methods as $method){
-            $subTemplate = file_get_contents($partials . ($method == 'init' ? 'test.init.php' : 'test.api.php'));
-            $vars['methods'] .= $this->templateHelper->substituteVariables($subTemplate, ['method'=>$method]);
+        switch ($this->cli->arguments[2]){
+            case 'model':
+                $template = file_get_contents($partials . 'modelTest.php');
+                break;
+            default:
+                $template = file_get_contents($partials . 'test.php');
+                foreach ($this->methods as $method){
+                    $subTemplate = file_get_contents($partials . ($method == 'init' ? 'test.init.php' : 'test.api.php'));
+                    $vars['methods'] .= $this->templateHelper->substituteVariables($subTemplate, ['method'=>$method]);
+                }
+                break;
         }
+
         $testFile = $this->templateHelper->substituteVariables($template, $vars);
         file_put_contents($fileName, $testFile);
 
     }
     function getMethods()
     {
-        $namespace = $this->cli->arguments[2] == 'component' ? 'Components' : 'Model';
         $file = file_get_contents(
             $this->folder . '/' . Ops::toPascalCase($this->cli->arguments[3])  .
             ($this->cli->arguments[2] == 'component' ? '.ctrl.php' : '.model.php')
