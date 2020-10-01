@@ -167,7 +167,7 @@ class Migration
     {
         $db = [];
         foreach ($this->SqlHelper->databaseTables() as $table) {
-            var_dump($table);
+            echo "migrating $table\n";
             $db[$table] = [];
             foreach ($this->SqlHelper->describeTable($table) as $description) {
                 $key = $description['Key'] === 'PRI' ? 'primary' : false;

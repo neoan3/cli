@@ -11,7 +11,7 @@ use Neoan3\Frame\{{frame.pascal}};
  * @package Neoan3\Components
  */
 
-class {{name}} extends {{frame.pascal}}{
+class {{name.pascal}} extends {{frame.pascal}}{
     /**
      * GET: api.v1/{{name.kebab}}
      * @param $params
