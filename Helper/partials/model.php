@@ -15,7 +15,7 @@ use Neoan3\Provider\MySql\Transform;
  * @method static find(array|null $conditionArray)
  */
 
-class {{name}}Model extends IndexModel{
+class {{name.pascal}}Model extends IndexModel{
 
     /**
      * @var Database|null

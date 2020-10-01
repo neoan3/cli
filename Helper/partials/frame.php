@@ -13,13 +13,17 @@ use Neoan3\Provider\MySql\DatabaseWrapper;
  * Class {{name}}
  * @package Neoan3\Frame
  */
-class {{name}} extends Serve
+class {{name.pascal}} extends Serve
 {
-
+    /**
+     * Db credential name
+     * @var string
+     */
+    private string $dbCredentials = 'neoan3_db';
     /**
      * @var Database|DatabaseWrapper
      */
-    protected Database $db;
+    public Database $db;
 
     /**
      * Demo constructor.
@@ -31,8 +35,14 @@ class {{name}} extends Serve
         if($db){
             $this->db = $db;
         } else {
-            $credentials = getCredentials('{{name.lower}}_db');
-            $this->db = new DatabaseWrapper($credentials);
+            try{
+                $credentials = getCredentials();
+                if(isset($credentials[$this->dbCredentials])){
+                    $this->db = new DatabaseWrapper($credentials['{{name.lower}}_db']);
+                }
+            } catch (\Exception $e) {
+                $this->footer = 'No credentials found. Run "neoan3 credentials"';
+            }
         }
     }
 
