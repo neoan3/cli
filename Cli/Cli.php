@@ -5,6 +5,8 @@ namespace Cli;
 
 
 use Creation\Creation;
+use Credentials\Credentials;
+use Migration\DatabaseWrapper;
 use Migration\Migration;
 use Set\Set;
 
@@ -33,7 +35,7 @@ class Cli
     private function argumentConstructor($arguments)
     {
         foreach ($arguments as $arg){
-            preg_match('/^-{1,2}([a-z0-9]+):*([a-z0-9]*)/i', $arg, $matches);
+            preg_match('/^-{1,2}([a-z0-9]+):*([a-z0-9.]*)/i', $arg, $matches);
             if(!empty($matches[1])){
                 $this->flags[$matches[1]] = !empty($matches[2]) ? $matches[2] : true;
             } else {
@@ -217,7 +219,12 @@ class Cli
                 new Set($this);
                 break;
             case 'migrate':
-                new Migration($this);
+                new Migration($this, new DatabaseWrapper());
+                break;
+            case 'credentials':
+                $c = new Credentials($this);
+                $c->chooseCredentials();
+                $c->displayCredentials();
                 break;
             case 'develop':
                 $this->displayAscii();

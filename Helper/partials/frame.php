@@ -6,34 +6,54 @@
 namespace Neoan3\Frame;
 
 use Neoan3\Core\Serve;
+use Neoan3\Provider\MySql\Database;
+use Neoan3\Provider\MySql\DatabaseWrapper;
 
 /**
  * Class {{name}}
  * @package Neoan3\Frame
  */
-class {{name}} extends Serve
+class {{name.pascal}} extends Serve
 {
+    /**
+     * Db credential name
+     * @var string
+     */
+    private string $dbCredentials = 'neoan3_db';
+    /**
+     * @var Database|DatabaseWrapper
+     */
+    public Database $db;
 
     /**
      * Demo constructor.
+     * @param Database|null $db
      */
-    function __construct()
+    function __construct(Database $db = null)
     {
         parent::__construct();
-        /*
-         * General SETUP
-         *
-         * */
+        if($db){
+            $this->db = $db;
+        } else {
+            try{
+                $credentials = getCredentials();
+                if(isset($credentials[$this->dbCredentials])){
+                    $this->db = new DatabaseWrapper($credentials['{{name.lower}}_db']);
+                }
+            } catch (\Exception $e) {
+                $this->footer = 'No credentials found. Run "neoan3 credentials"';
+            }
+        }
+    }
 
-        /*
-        // example DB implementation
-        try{
-            \Neoan3\Apps\Db::setEnvironment(getCredentials()['your_db_credentials']);
-        } catch (\Neoan3\Apps\DbException $e){
-            echo "Failed to initiate database connection";
-            die();
-        }*/
-
+    /**
+     * @param $model
+     * @return mixed
+     */
+    function model($model)
+    {
+        $model::init($this->db);
+        return $model;
     }
 
     /**

@@ -4,25 +4,27 @@
 namespace Migration;
 
 
+use Cli\Cli;
+use Credentials\Credentials;
 use Helper\CredentialHelper;
 use Helper\SqlHelper;
-use Neoan3\Apps\Db;
-use Neoan3\Apps\DbException;
 
 class Migration
 {
-    private \Cli\Cli $cli;
+    private Cli $cli;
     public ?string $direction = null;
-    private array $usedCredentials;
     private SqlHelper $SqlHelper;
     public CredentialHelper $credentialHelper;
+    public Credentials $credentials;
     public array $knownModels;
     public array $knownTables;
+    public DataBase $db;
 
-    function __construct(\Cli\Cli $cli)
+    function __construct(Cli $cli, DataBase $Db)
     {
         $this->cli = $cli;
-        $this->credentialHelper = new CredentialHelper($cli);
+        $this->credentials = new Credentials($cli);
+        $this->db = $Db;
         $this->process();
     }
 
@@ -53,31 +55,16 @@ class Migration
 
     function chooseCredentials()
     {
-        $credentials = $this->credentialHelper->readCredentials();
-        $i = 0;
-        $this->cli->printLn('Choose credentials', 'green');
-        foreach ($credentials as $key => $credential) {
-            $this->cli->printLn('[' . $i . '] ' . $key, 'green');
-            $i++;
-        }
-        $this->cli->printLn('[x] create new credentials', 'yellow');
-        $this->cli->waitForSingleInput(function ($input) use ($credentials) {
-            if ($input === 'x' || $input === '') {
-                $this->cli->printLn('');
-                $this->credentialHelper->createNew([
-                    'host' => 'localhost',
-                    'name' => 'neoan3_db',
-                    'user' => 'root',
-                    'password' => '',
-                    'port' => 3306,
-                    'assumes_uuid' => 'true'
-                ]);
-                $this->usedCredentials = $this->credentialHelper->credentials[$this->credentialHelper->currentCredentialName];
-            } else {
-                $this->usedCredentials = $this->credentialHelper->credentials[array_keys($credentials)[$input]];
-            }
-        });
-        $this->SqlHelper = new SqlHelper($this->usedCredentials);
+        $format = [
+            'host' => 'localhost',
+            'name' => 'neoan3_db',
+            'user' => 'root',
+            'password' => '',
+            'port' => 3306,
+            'assumes_uuid' => 'true'
+        ];
+        $this->credentials->chooseCredentials($format);
+        $this->SqlHelper = new SqlHelper($this->credentials->currentCredentials, $this->db);
     }
 
     function process()
@@ -104,10 +91,9 @@ class Migration
             foreach ($knownModel as $targetTable => $columns) {
 
                 if (isset($this->knownTables[$targetTable])) {
-                    $unique = '';
                     try {
-                        Db::ask(">ALTER TABLE `$targetTable` DROP PRIMARY KEY");
-                    } catch (DbException $e) {
+                        $this->db->query(">ALTER TABLE `$targetTable` DROP PRIMARY KEY");
+                    } catch (\Exception $e) {
                         $this->cli->printLn("SQL Error: " . $e->getMessage());
                     }
                     $sql = "ALTER TABLE `$targetTable`\n";
@@ -134,12 +120,11 @@ class Migration
                     $sql .= "\n)";
                 }
                 try {
-                    Db::ask('>' . $sql);
-                } catch (DbException $e) {
+                    $this->db->query('>' . $sql);
+                } catch (\Exception $e) {
                     $this->cli->printLn('SQL Error: ' . $e->getMessage(), 'red');
                     $this->cli->printLn('Executed: ' . $sql, 'red');
                 }
-
             }
         }
     }
@@ -182,6 +167,7 @@ class Migration
     {
         $db = [];
         foreach ($this->SqlHelper->databaseTables() as $table) {
+            echo "migrating $table\n";
             $db[$table] = [];
             foreach ($this->SqlHelper->describeTable($table) as $description) {
                 $key = $description['Key'] === 'PRI' ? 'primary' : false;
@@ -200,9 +186,10 @@ class Migration
         }
         $this->knownTables = $db;
     }
+
     private function defaultQuotes($type, $value)
     {
-        if(preg_match('/enum|varchar|text|longtext|mediumtext/', $type) === 1){
+        if (preg_match('/enum|varchar|text|longtext|mediumtext/', $type) === 1) {
             return '"' . $value . '"';
         } else {
             return $value;

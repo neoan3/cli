@@ -6,14 +6,15 @@ namespace Creation;
 
 use Cli\Cli;
 use Helper\FileHelper;
-use Helper\TemplateHelper;
 
 class App
 {
     private Cli $cli;
+    private string $version;
     function __construct(Cli $cli)
     {
         $this->cli = $cli;
+        $this->version = $this->cli->flags['v'] ?? 'master';
     }
 
     function init()
@@ -21,29 +22,46 @@ class App
         $helper = new FileHelper($this->cli);
         echo "downloading...\n";
         // download zip
-        $helper->download('https://neoan3.rocks/asset/neoan3-master.zip','app.zip');
+        try{
+            $version = $this->version != 'master' ? 'v' . $this->version : 'master';
+            $helper->download("https://github.com/sroehrl/neoan3/archive/$version.zip",'app.zip');
+        } catch (\Exception $e) {
+            $this->cli->printLn('Error:', 'red');
+            $this->cli->printLn($e->getMessage(), 'red');
+            $this->cli->printLn('This version does not exist or GitHub is unreachable', 'red');
+            return;
+        }
+
         // unpack
         try{
             $helper->unZip($this->cli->workPath . '/app.zip','');
         } catch (\Exception $e){
             $this->cli->printLn("Warning: unable to unpack neoan3-zip");
+            return;
         }
         // copy
-        $helper->copyDir('neoan3-master','');
-        // remove folder
-        $helper->deleteRecursively($this->cli->workPath . '/neoan3-master/');
+        try{
+            $helper->copyDir("neoan3-$this->version",'');
+            // remove folder
+            $helper->deleteRecursively($this->cli->workPath . "/neoan3-$this->version/");
+            // rewrite .htaccess
+            $this->htaccessRewrite();
+            // write readme
+            $this->writeReadme();
+            echo "Dependencies...";
+            $this->cli->io('composer update');
+        } catch (\Exception $e){
+            $this->cli->printLn("Warning: unable to process app.zip");
+            return;
+        }
+
         // remove archive
         try{
             unlink($this->cli->workPath . '/app.zip');
         } catch (\Exception $e){
             $this->cli->printLn("Warning: unable to delete app.zip");
+            return;
         }
-        // rewrite .htaccess
-        $this->htaccessRewrite();
-        // write readme
-        $this->writeReadme();
-        echo "Dependencies...";
-        $this->cli->io('composer update');
 
     }
     function htaccessRewrite()

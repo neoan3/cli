@@ -4,18 +4,22 @@
 namespace Helper;
 
 
+use Exception;
+use Migration\DataBase;
 use Neoan3\Apps\Db;
 use Neoan3\Apps\DbException;
 
 class SqlHelper
 {
     private array $usedCredentials;
-    function __construct($credentials)
+    private DataBase $db;
+    function __construct($credentials, DataBase $db)
     {
+        $this->db = $db;
         try{
             $credentials['dev_errors'] = true;
-            Db::setEnvironment($credentials);
-        } catch (DbException $e) {
+            $this->db->connect($credentials);
+        } catch (Exception $e) {
             echo "Db connection not established";
             die();
         }
@@ -25,22 +29,22 @@ class SqlHelper
     {
         try{
             $tables = [];
-            $call = Db::ask(">SHOW tables");
+            $call = $this->db->query(">SHOW tables");
             foreach ($call as $table){
                 if(isset($table['Tables_in_'.$this->usedCredentials['name']])){
                     $tables[] = $table['Tables_in_'.$this->usedCredentials['name']];
                 }
             }
             return $tables;
-        } catch (DbException $e){
+        } catch (Exception $e){
             $this->error($e);
         }
     }
     function describeTable($table)
     {
         try{
-            return Db::ask(">DESCRIBE `$table`");
-        } catch (DbException $e){
+            return $this->db->query(">DESCRIBE `$table`");
+        } catch (Exception $e){
             $this->error($e);
         }
 

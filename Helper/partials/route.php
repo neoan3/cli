@@ -11,7 +11,7 @@ use {{extends}};
  * @package Neoan3\Components
  */
 
-class {{name}} extends {{extended}}{
+class {{name.pascal}} extends {{extended}}{
     /**
      * Route: {{name.kebab}}
      */

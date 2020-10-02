@@ -3,28 +3,49 @@
 
 namespace Neoan3\Model;
 
+use Neoan3\Provider\MySql\Database;
+use Neoan3\Provider\MySql\Transform;
+
 /**
  * Class {{name}}
  * @package Neoan3\Model
+ * @method static get(string $id)
+ * @method static create(array $modelArray)
+ * @method static update(array $modelArray)
+ * @method static find(array|null $conditionArray)
  */
 
-class {{name}}Model extends IndexModel{
+class {{name.pascal}}Model extends IndexModel{
+
     /**
-     * @param $id
+     * @var Database|null
+     */
+    private static ?Database $db = null;
+
+    /**
+     * @param $method
+     * @param $args
      * @return mixed
      */
-    static function get(string $id)
+    public static function __callStatic($method, $args)
     {
-        return [];
+        if(!method_exists(self::class, $method)){
+            $transform = new Transform('{{name.lower}}', self::$db);
+            return $transform->$method(...$args);
+        } else {
+            return self::$method(...$args);
+        }
     }
+
     /**
-     * @param $condition
-     * @return mixed
+     * @param Database $database
      */
-    static function find(array $condition)
+    public static function init(Database $database)
     {
-        return [];
+        self::$db = $database;
     }
+
+
     /**
      * @param $id
      * @return mixed
