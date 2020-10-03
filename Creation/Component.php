@@ -185,6 +185,7 @@ class Component
         if (!$template) {
             $template = "<h1>{$this->cli->arguments[2]}</h1>";
         }
+        $template = $this->template->substituteVariables($template);
         file_put_contents($this->folder . '/' . Ops::toCamelCase($this->cli->arguments[2]) . '.view.html', $template);
     }
 
