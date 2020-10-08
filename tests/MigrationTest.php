@@ -38,8 +38,19 @@ class MigrationTest extends TestCase
 
     function testProcess()
     {
-        foreach (['up','down'] as $direction){
-            $cli = new MockCli(['neoan3-cli', 'migrate', 'models', $direction], $this->workpath);
+        foreach (['down','up','model'] as $direction){
+            if($direction !== 'model'){
+                $cli = new MockCli(['neoan3-cli', 'migrate', 'models', $direction], $this->workpath);
+                // get known tables
+                $this->mockDb->expectedOutcomes[] = [
+                    [
+                        'Tables_in_cli_test_db' => 'test'
+                    ]
+                ];
+            } else {
+                $cli = new MockCli(['neoan3-cli', 'migrate', 'model', 'test', 'up'], $this->workpath);
+            }
+
             // user input
             $cli->addInput('x');
             $cli->addInput('cli-migration-test');
@@ -50,16 +61,19 @@ class MigrationTest extends TestCase
             $cli->addInput('');
             $cli->addInput('');
 
-            // get known tables
-            $this->mockDb->expectedOutcomes[] = [
-                [
-                    'Tables_in_cli_test_db' => 'test'
-                ]
-            ];
+
             $this->mockDb->expectedOutcomes[] = [
                 [
                     'Field' => 'id',
                     'Key' => 'PRI',
+                    'Type' => 'BINARY',
+                    'Null' => 'No',
+                    'Default' => false,
+                    'Extra' => ''
+                ],
+                [
+                    'Field' => 'user_id',
+                    'Key' => 'UNI',
                     'Type' => 'BINARY',
                     'Null' => 'No',
                     'Default' => false,
@@ -75,9 +89,22 @@ class MigrationTest extends TestCase
                 ],
             ];
 
+            // for insert catching
+            $this->mockDb->expectedOutcomes[] = [];
+
             new Migration($cli, $this->mockDb);
             $this->expectOutputRegex('/done/');
         }
 
     }
+    function testDefaultQuotes()
+    {
+        $mockDb = new MockDatabaseWrapper();
+        $migrate = new Migration(new MockCli(['neoan3-cli', '-v'],$this->workpath), $mockDb);
+        $one = $migrate->sqlRow('key',['default'=>'sam','type'=>'varchar(255)','key'=>false,'nullable'=>false]);
+        $two = $migrate->sqlRow('key',['default'=>1,'type'=>'int(11)','key'=>false,'nullable'=>true]);
+        $this->assertMatchesRegularExpression('/`key`/', $one);
+    }
+
+
 }

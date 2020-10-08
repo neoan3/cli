@@ -1,0 +1,11 @@
+<div class="container">
+    <h1 class="font-lg">Route</h1>
+    <p class="text-primary">You can find this view in /component/{{name.pascal}}/{{name.camel}}.view.html</p>
+    <div class="m-t-5 p-4 b-rounded b-1 b-primary">
+        <h3 class="text-secondary font-default">Did you know?</h3>
+        <p>
+            You can influence how these new endpoints look like. Try creating a folder _template in your neoan3 application
+            and add a file "view.html". The next time you create a route-component, the cli tool will use your template.
+        </p>
+    </div>
+</div>

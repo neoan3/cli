@@ -24,7 +24,7 @@ class App
         // download zip
         try{
             $version = $this->version != 'master' ? 'v' . $this->version : 'master';
-            $helper->download("https://github.com/sroehrl/neoan3/archive/$version.zip",'app.zip');
+            $helper->download("https://github.com/neoan3/neoan3/archive/$version.zip",'app.zip');
         } catch (\Exception $e) {
             $this->cli->printLn('Error:', 'red');
             $this->cli->printLn($e->getMessage(), 'red');
@@ -49,7 +49,7 @@ class App
             // write readme
             $this->writeReadme();
             echo "Dependencies...";
-            $this->cli->io('composer update');
+            $this->cli->io('composer update -d ' . $this->cli->workPath);
         } catch (\Exception $e){
             $this->cli->printLn("Warning: unable to process app.zip");
             return;

@@ -16,13 +16,8 @@ class SqlHelper
     function __construct($credentials, DataBase $db)
     {
         $this->db = $db;
-        try{
-            $credentials['dev_errors'] = true;
-            $this->db->connect($credentials);
-        } catch (Exception $e) {
-            echo "Db connection not established";
-            die();
-        }
+        $credentials['dev_errors'] = true;
+        $this->db->connect($credentials);
         $this->usedCredentials = $credentials;
     }
     function databaseTables()
@@ -53,6 +48,5 @@ class SqlHelper
     {
         echo "SQL issue:\n";
         echo $error->getMessage();
-        die();
     }
 }

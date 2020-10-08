@@ -4,11 +4,13 @@
 namespace Creation;
 
 
+use Cli\Cli;
+
 class Creation
 {
-    private \Cli\Cli $cli;
+    private Cli $cli;
     public bool $workable = true;
-    function __construct(\Cli\Cli $cli)
+    function __construct(Cli $cli)
     {
         $this->cli = $cli;
         if($this->needed()){

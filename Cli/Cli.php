@@ -6,6 +6,7 @@ namespace Cli;
 
 use Creation\Creation;
 use Credentials\Credentials;
+use Helper\VersionHelper;
 use Migration\DatabaseWrapper;
 use Migration\Migration;
 use Set\Set;
@@ -15,6 +16,7 @@ class Cli
     public array $arguments = [];
     public array $flags = [];
     public string $workPath;
+    public VersionHelper $versionHelper;
     public string $ascii = "\e[32m\n" .
     "::::    ::: :::::::::: ::::::::      :::     ::::    :::  ::::::::  \n" .
     ":+:+:   :+: :+:       :+:    :+:   :+: :+:   :+:+:   :+: :+:    :+: \n" .
@@ -31,6 +33,7 @@ class Cli
         $this->workPath = $workPath;
         array_shift($arguments);
         $this->argumentConstructor($arguments);
+        $this->versionHelper = new VersionHelper($this);
     }
     private function argumentConstructor($arguments)
     {
@@ -59,7 +62,7 @@ class Cli
     {
         echo $this->ascii;
     }
-    function io($execString, $warning = "Warning: Command did not return\n")
+    function io($execString, $warning = "Command did not return anything\n")
     {
         exec($execString, $this->output, $return);
         if (empty($this->output)) {
@@ -197,11 +200,9 @@ class Cli
     function run()
     {
 
+
         if(array_search('v', $this->flags )){
-            exec('composer global show neoan3/neoan3 -f json', $output, $return);
-            $package = json_decode(implode('',$output), true);
-            $this->printLn("Version: " . $package['versions'][0], 'magenta');
-            $this->printLn("Docs: " . $package['homepage'], 'magenta');
+            $this->versionHelper->printCliVersion();
             exit();
         }
         if(!isset($this->arguments[0])){
@@ -214,6 +215,7 @@ class Cli
                 break;
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
+                $this->printLn('Processed. See ' . $this->workPath . '/tests/report/index.html' ,'green');
                 break;
             case 'set':
                 new Set($this);
