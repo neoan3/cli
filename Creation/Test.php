@@ -65,7 +65,7 @@ class Test
                         $passIn['expected'] = $this->getParameterMock($param->getType()->getName());
                         $passIn['paramString'] .= ($i > 0 ? ', ' : '') . $passIn['expected'];
                     }
-                    $subTemplate = $this->templateHelper->readPartial(($method == 'init' ? 'test.init' : 'test.api'));
+                    $subTemplate = $this->templateHelper->readPartial(($method->name == 'init' ? 'test.init' : 'test.api'));
                     $vars['methods'] .= $this->templateHelper->substituteVariables($subTemplate, $passIn);
                 }
                 break;
