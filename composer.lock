@@ -4,26 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9db7e5c3574687738564a8f8f55fc062",
+    "content-hash": "137ca438330734b4ebeff8f05111cb64",
     "packages": [
         {
             "name": "neoan3-apps/db",
-            "version": "0.2.1",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroehrl/neoan3-db.git",
-                "reference": "b2859d08f44b20f8174fabfba51a4e8becec70f0"
+                "reference": "f2ef387f9e4433c770767e18b5242a1b5d44dc1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroehrl/neoan3-db/zipball/b2859d08f44b20f8174fabfba51a4e8becec70f0",
-                "reference": "b2859d08f44b20f8174fabfba51a4e8becec70f0",
+                "url": "https://api.github.com/repos/sroehrl/neoan3-db/zipball/f2ef387f9e4433c770767e18b5242a1b5d44dc1d",
+                "reference": "f2ef387f9e4433c770767e18b5242a1b5d44dc1d",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-mysqli": "*",
                 "php": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3"
             },
             "type": "library",
             "autoload": {
@@ -42,7 +45,7 @@
                 }
             ],
             "description": "neoan3 mysqli class",
-            "time": "2019-09-10T17:54:43+00:00"
+            "time": "2020-09-26T16:11:45+00:00"
         },
         {
             "name": "neoan3-apps/ops",
@@ -610,16 +613,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.1.11",
+            "version": "9.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c9394cb9d07ecfa9351b96f2e296bad473195f4d"
+                "reference": "53a4b737e83be724efd2bc4e7b929b9a30c48972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c9394cb9d07ecfa9351b96f2e296bad473195f4d",
-                "reference": "c9394cb9d07ecfa9351b96f2e296bad473195f4d",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/53a4b737e83be724efd2bc4e7b929b9a30c48972",
+                "reference": "53a4b737e83be724efd2bc4e7b929b9a30c48972",
                 "shasum": ""
             },
             "require": {
@@ -647,7 +650,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "9.1-dev"
+                    "dev-master": "9.2-dev"
                 }
             },
             "autoload": {
@@ -679,7 +682,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-19T05:29:17+00:00"
+            "time": "2020-10-02T03:37:32+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -908,16 +911,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.3.11",
+            "version": "9.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f7316ea106df7c9507f4fdaa88c47bc10a3b27a1"
+                "reference": "ef533467a7974c4b6c354f3eff42a115910bd4e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f7316ea106df7c9507f4fdaa88c47bc10a3b27a1",
-                "reference": "f7316ea106df7c9507f4fdaa88c47bc10a3b27a1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ef533467a7974c4b6c354f3eff42a115910bd4e5",
+                "reference": "ef533467a7974c4b6c354f3eff42a115910bd4e5",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +936,7 @@
                 "phar-io/version": "^3.0.2",
                 "php": ">=7.3",
                 "phpspec/prophecy": "^1.11.1",
-                "phpunit/php-code-coverage": "^9.1.11",
+                "phpunit/php-code-coverage": "^9.2",
                 "phpunit/php-file-iterator": "^3.0.4",
                 "phpunit/php-invoker": "^3.1",
                 "phpunit/php-text-template": "^2.0.2",
@@ -964,7 +967,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "9.3-dev"
+                    "dev-master": "9.4-dev"
                 }
             },
             "autoload": {
@@ -1003,7 +1006,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-24T08:08:49+00:00"
+            "time": "2020-10-02T03:54:37+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1059,16 +1062,16 @@
         },
         {
             "name": "sebastian/code-unit",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit.git",
-                "reference": "d3a241b6028ff9d8e97d2b6ebd4090d01f92fad8"
+                "reference": "59236be62b1bb9919e6d7f60b0b832dc05cef9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/d3a241b6028ff9d8e97d2b6ebd4090d01f92fad8",
-                "reference": "d3a241b6028ff9d8e97d2b6ebd4090d01f92fad8",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/59236be62b1bb9919e6d7f60b0b832dc05cef9ab",
+                "reference": "59236be62b1bb9919e6d7f60b0b832dc05cef9ab",
                 "shasum": ""
             },
             "require": {
@@ -1107,7 +1110,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T05:28:46+00:00"
+            "time": "2020-10-02T14:47:54+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1806,16 +1809,16 @@
         },
         {
             "name": "sebastian/type",
-            "version": "2.2.2",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/type.git",
-                "reference": "e494dcaeb89d1458c9ccd8c819745245a1669aea"
+                "reference": "fa592377f3923946cb90bf1f6a71ba2e5f229909"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/e494dcaeb89d1458c9ccd8c819745245a1669aea",
-                "reference": "e494dcaeb89d1458c9ccd8c819745245a1669aea",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/fa592377f3923946cb90bf1f6a71ba2e5f229909",
+                "reference": "fa592377f3923946cb90bf1f6a71ba2e5f229909",
                 "shasum": ""
             },
             "require": {
@@ -1827,7 +1830,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -1854,7 +1857,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T06:01:38+00:00"
+            "time": "2020-10-06T08:41:03+00:00"
         },
         {
             "name": "sebastian/version",

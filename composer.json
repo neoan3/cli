@@ -1,5 +1,5 @@
 {
-    "name": "neoan3/neoan3",
+    "name": "neoan3/cli",
     "homepage": "https://neoan3.rocks",
     "description": "official neoan3 cli",
     "type": "library",
@@ -30,7 +30,7 @@
         "neoan3-apps/ops": "^2.0",
         "ext-readline": "*",
         "ext-json": "*",
-        "neoan3-apps/db": "^0.2.1"
+        "neoan3-apps/db": "^0.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.3"

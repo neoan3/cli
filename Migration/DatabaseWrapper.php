@@ -32,10 +32,6 @@ class DatabaseWrapper implements DataBase
      */
     function connect($credentials) :void
     {
-        try{
-            Db::setEnvironment($credentials);
-        } catch (DbException $e){
-            throw new Exception($e->getMessage());
-        }
+        Db::setEnvironment($credentials);
     }
 }

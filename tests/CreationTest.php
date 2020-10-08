@@ -47,28 +47,42 @@ class CreationTest extends TestCase
         sleep(3);
         $this->assertTrue($ok->workable);
     }
-    public function testTestCreation()
+    public function testTestCreationFailure()
     {
         // test warning
         new Creation(new Cli(['neoan3-cli','new','test','component','endpoint'],$this->workpath));
         $this->expectOutputRegex('/already exists/');
-        // create component
-        $create = new Creation(new Cli(['neoan3-cli','new','component','newComponent', '-f:demo', '-t:api'],$this->workpath));
-        // test test creation
-        new Creation(new Cli(['neoan3-cli','new','test','component','newComponent'],$this->workpath));
-        $this->assertFileExists($this->workpath . '/component/newComponent/NewComponentTest.php');
+    }
+    public function testTestCreationMalFormed()
+    {
         // test malformed
         new Creation(new Cli(['neoan3-cli','new','test','component'],$this->workpath));
         $this->expectOutputRegex('/Malformed command/');
     }
-    public function testComponent()
+    public function testTestCreation()
+    {
+        // create component
+        $create = new Creation(new Cli(['neoan3-cli','new','component','newComponent', '-f:demo', '-t:api'],$this->workpath));
+        // test test creation
+        new Creation(new Cli(['neoan3-cli','new','test','component','newComponent'], $this->workpath));
+        $this->assertFileExists($this->workpath . '/component/newComponent/NewComponentTest.php');
+
+    }
+    public function testComponentExists()
     {
         // test warning
         new Creation(new Cli(['neoan3-cli','new','component','endpoint'],$this->workpath));
         $this->expectOutputRegex('/already exists/');
+    }
+    public function testComponentMalformed()
+    {
         // test malformed
         new Creation(new Cli(['neoan3-cli','new','component'],$this->workpath));
         $this->expectOutputRegex('/Malformed command/');
+    }
+    public function testComponent()
+    {
+
         // test ask for type
         $cli = new MockCli(['neoan3-cli','new','component','askTypes'],$this->workpath);
         // choose route

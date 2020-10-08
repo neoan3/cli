@@ -34,7 +34,12 @@ class Component
             $this->cli->printLn('Malformed command. Expected format:', 'red');
             $this->cli->printLn('neoan3 new component <componentName>');
         } else {
-            $this->folder = $this->cli->workPath . '/component/' . Ops::toCamelCase($this->cli->arguments[2]);
+            if($this->cli->versionHelper->appMainVersion < 3){
+                $folderName = Ops::toCamelCase($this->cli->arguments[2]);
+            } else {
+                $folderName = Ops::toPascalCase($this->cli->arguments[2]);
+            }
+            $this->folder = $this->cli->workPath . '/component/' . $folderName;
             if($this->controllerExists()){
                 return;
             }
@@ -139,13 +144,13 @@ class Component
 
         $template = $this->template->readTemplate('api.php');
         if (!$template) {
-            $template = file_get_contents(dirname(__DIR__) . '/Helper/partials/api.php');
+            $template = $this->template->readPartial('api');
         }
         $template = $this->template->substituteVariables($template, [
             'frame' => $this->frame,
             'frame.pascal' => Ops::toPascalCase($this->frame),
         ]);
-        file_put_contents($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.ctrl.php', $template);
+        $this->template->writeController($template);
     }
 
     function writeCtrl()
@@ -161,7 +166,7 @@ class Component
                 });
             }
 
-            $routePartial = file_get_contents(dirname(__DIR__) . '/Helper/partials/route.php');
+            $routePartial = $this->template->readPartial('route');
             $extends = 'Neoan3\Core\Unicore';
             $extended = 'Unicore';
             if (!$this->frame) {
@@ -176,16 +181,16 @@ class Component
             ]);
         }
         $template = $this->template->substituteVariables($template, ['frame' => $this->frame]);
-        file_put_contents($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.ctrl.php', $template);
+        $this->template->writeController($template);
     }
 
     function writeView()
     {
         $template = $this->template->readTemplate('view.html');
         if (!$template) {
-            $template = "<h1>{$this->cli->arguments[2]}</h1>";
+            $template = $this->template->substituteVariables($this->template->readPartial('view'));
         }
-        file_put_contents($this->folder . '/' . Ops::toCamelCase($this->cli->arguments[2]) . '.view.html', $template);
+        $this->template->writeView($template);
     }
 
 
@@ -197,7 +202,8 @@ class Component
     }
     function controllerExists()
     {
-        if(file_exists($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.ctrl.php')){
+
+        if(!empty(glob($this->folder . '/*.php'))){
             $this->cli->printLn('Component already exists', 'red');
             return true;
         }

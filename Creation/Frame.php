@@ -41,10 +41,10 @@ class Frame
     {
         $template = $this->template->readTemplate('frame.php');
         if(!$template){
-            $template = file_get_contents(dirname(__DIR__) . '/Helper/partials/frame.php');
+            $template = $this->template->readPartial('frame');
         }
         $template = $this->template->substituteVariables($template);
-        file_put_contents($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.php', $template);
+        $this->template->writeFrame($template);
     }
     function frameExists()
     {

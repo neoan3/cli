@@ -1,0 +1,15 @@
+<?php
+
+namespace Neoan3\Component\{{name.pascal}};
+
+use PHPUnit\Framework\TestCase;
+
+class {{name.pascal}}Test extends TestCase
+{
+    private {{name.pascal}}Controller $instance;
+    function setUp(): void
+    {
+        $this->instance = new {{name.pascal}}Controller();
+    }
+    {{methods}}
+}
