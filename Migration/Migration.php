@@ -8,6 +8,7 @@ use Cli\Cli;
 use Credentials\Credentials;
 use Helper\CredentialHelper;
 use Helper\SqlHelper;
+use Neoan3\Apps\Ops;
 
 class Migration
 {
@@ -158,7 +159,7 @@ class Migration
         $files = scandir($dir);
         foreach ($files as $folder) {
             if (is_dir($dir . '/' . $folder) && $folder != 'index' && $folder !== '.' && $folder !== '..') {
-                $this->knownModels[$folder] = json_decode(file_get_contents($dir . '/' . $folder . '/migrate.json'), true);
+                $this->knownModels[Ops::toSnakeCase($folder)] = json_decode(file_get_contents($dir . '/' . $folder . '/migrate.json'), true);
             }
         }
     }
