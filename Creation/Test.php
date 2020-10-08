@@ -62,7 +62,7 @@ class Test
                     $passIn = ['method' => $method->name, 'paramString' => '', 'expected' => ''];
                     $params = $method->getParameters();
                     foreach ($params as $i => $param){
-                        $passIn['expected'] = $this->getParameterMock($param->getType());
+                        $passIn['expected'] = $this->getParameterMock($param->getType()->getName());
                         $passIn['paramString'] .= ($i > 0 ? ', ' : '') . $passIn['expected'];
                     }
                     $subTemplate = $this->templateHelper->readPartial(($method == 'init' ? 'test.init' : 'test.api'));
