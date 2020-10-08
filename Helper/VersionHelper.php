@@ -19,10 +19,14 @@ class VersionHelper
     {
         exec('composer global show neoan3/neoan3 -f json', $output, $return);
         $package = json_decode(implode('',$output), true);
+        $homepage = 'https://neoan3.rocks';
+        $version = 'not recognized';
         if($package){
-            $this->cli->printLn("Version: " . $package['versions'][0], 'magenta');
-            $this->cli->printLn("Docs: " . $package['homepage'], 'magenta');
+            $homepage = $package['homepage'];
+            $version = $package['versions'][0];
         }
+        $this->cli->printLn("Version: $version", 'magenta');
+        $this->cli->printLn("Docs: $homepage", 'magenta');
     }
     private function retrieveNeoanVersion()
     {
