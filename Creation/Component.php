@@ -190,6 +190,7 @@ class Component
         if (!$template) {
             $template = $this->template->substituteVariables($this->template->readPartial('view'));
         }
+        $template = $this->template->substituteVariables($template);
         $this->template->writeView($template);
     }
 

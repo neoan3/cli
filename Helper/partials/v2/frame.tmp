@@ -73,7 +73,7 @@ class {{name.pascal}} extends Serve
                 ]
             ],
             'stylesheet' => [
-                'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css',
+                'https://cdn.jsdelivr.net/npm/gaudiamus-css@1.2.0/css/gaudiamus.min.css',
             ]
         ];
     }
