@@ -1,6 +1,19 @@
-
+    /**
+     *  Route output shall have no errors
+     */
     public function testInit()
     {
+        /**
+         * Using models?
+         * You can use the same mock-helpers as the models themselves.
+         *
+         * e.g. to mock a ::find call
+         * $mockDb = new MockDatabaseWrapper([]);
+         * $mockDb->mockFind('post');
+         * // don't forget to register your mock provider
+         * $this->instance->registerProvider($mockDb);
+         *
+         */
         $this->expectOutputRegex('/^<!doctype html>/');
         $this->instance->init();
     }

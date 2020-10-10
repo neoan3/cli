@@ -65,8 +65,23 @@ class Test
                         $passIn['expected'] = $this->getParameterMock($param->getType()->getName());
                         $passIn['paramString'] .= ($i > 0 ? ', ' : '') . $passIn['expected'];
                     }
-                    $subTemplate = $this->templateHelper->readPartial(($method->name == 'init' ? 'test.init' : 'test.api'));
-                    $vars['methods'] .= $this->templateHelper->substituteVariables($subTemplate, $passIn);
+                    switch (mb_substr($method->name,0,3)){
+                        case 'ini':
+                            $subTemplate = $this->templateHelper->readPartial('test.init');
+                            $vars['methods'] .= $this->templateHelper->substituteVariables($subTemplate, $passIn);
+                            break;
+                        case 'get':
+                        case 'pos':
+                        case 'put':
+                        case 'pat':
+                        case 'del':
+                            $subTemplate = $this->templateHelper->readPartial('test.api');
+                            $vars['methods'] .= $this->templateHelper->substituteVariables($subTemplate, $passIn);
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
                 break;
         }
