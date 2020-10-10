@@ -19,7 +19,7 @@ class {{name.pascal}}Controller extends Unicore{
     {
         $this
             ->uni({{frame}})
-            ->hook('main', 'route')
+            ->hook('main', '{{name.camel}}')
             ->output();
     }
 
