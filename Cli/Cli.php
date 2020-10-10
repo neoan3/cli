@@ -6,6 +6,7 @@ namespace Cli;
 
 use Creation\Creation;
 use Credentials\Credentials;
+use Helper\ServerHelper;
 use Helper\VersionHelper;
 use Migration\DatabaseWrapper;
 use Migration\Migration;
@@ -215,7 +216,8 @@ class Cli
                 break;
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
-                $this->printLn('Processed. See ' . $this->workPath . '/tests/report/index.html' ,'green');
+                $s = new ServerHelper($this);
+                $s->startCoverageServer();
                 break;
             case 'set':
                 new Set($this);
@@ -229,11 +231,8 @@ class Cli
                 $c->displayCredentials();
                 break;
             case 'develop':
-                $this->displayAscii();
-                $this->printLn('Build something amazing today!', 'green');
-                $this->printLn('##############################', 'green');
-                $this->printLn('Starting development server. Press Ctrl+C / Command+C to quit.');
-                $this->io('php -S localhost:8080 _neoan/server.php');
+                $s = new ServerHelper($this);
+                $s->startDevServer();
                 break;
             default:
                 $this->printLn('Unknown command' , 'red');
