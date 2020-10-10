@@ -216,8 +216,10 @@ class Cli
                 break;
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');
-                $s = new ServerHelper($this);
-                $s->startCoverageServer();
+                if($this->versionHelper->appMainVersion > 2){
+                    $s = new ServerHelper($this);
+                    $s->startCoverageServer();
+                }
                 break;
             case 'set':
                 new Set($this);
