@@ -8,9 +8,9 @@
          * You can use the same mock-helpers as the models themselves.
          *
          * e.g. to mock a ::find call
-         * $mockDb = new MockDatabaseWrapper([]);
-         * $mockDb->mockFind('post');
-         * // don't forget to register your mock provider
+         * $mockDb = new \Neoan3\Provider\MySql\MockDatabaseWrapper([]);
+         * $mockDb->mockFind('{{name.lower}}');
+         * // don't forget to register your mock provider(s in the right order)
          * $this->instance->registerProvider($mockDb);
          *
          */
