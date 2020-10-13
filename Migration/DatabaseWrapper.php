@@ -20,7 +20,11 @@ class DatabaseWrapper implements DataBase
     function query($table, $condition = [], $extra = []) : ?array
     {
         try{
-            return Db::ask($table, $condition, $extra);
+            $result =  Db::ask($table, $condition, $extra);
+            if(is_numeric($result)){
+                return null;
+            }
+            return $result;
         } catch (DbException $e){
             throw new Exception($e->getMessage());
         }
