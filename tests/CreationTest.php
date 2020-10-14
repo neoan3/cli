@@ -5,12 +5,15 @@ use Cli\Cli;
 use PHPUnit\Framework\TestCase;
 
 require_once 'MockCli.php';
+require_once 'MockDatabaseWrapper.php';
 
 class CreationTest extends TestCase
 {
     private Cli $cli;
     private Creation $instance;
     private string $workpath;
+    private MockDatabaseWrapper $mockDb;
+
     static function setUpBeforeClass(): void
     {
         if(!file_exists(dirname(__DIR__).'/playground')){
@@ -20,6 +23,7 @@ class CreationTest extends TestCase
     protected function setUp(): void
     {
         $this->workpath = dirname(__DIR__).'/playground';
+        $this->mockDb = new MockDatabaseWrapper();
     }
 
     static function tearDownAfterClass(): void
@@ -35,7 +39,7 @@ class CreationTest extends TestCase
 
     public function testNeeded()
     {
-        $missingArg = new Creation(new Cli(['neoan3-cli','new'],$this->workpath));
+        $missingArg = new Creation(new Cli(['neoan3-cli','new'],$this->workpath), $this->mockDb);
         $this->assertFalse(
             $missingArg->workable
         );
@@ -43,41 +47,41 @@ class CreationTest extends TestCase
 
     public function test__construct()
     {
-        $ok = new Creation(new Cli(['neoan3-cli','new','app'],$this->workpath));
+        $ok = new Creation(new Cli(['neoan3-cli','new','app'],$this->workpath), $this->mockDb);
         sleep(3);
         $this->assertTrue($ok->workable);
     }
     public function testTestCreationFailure()
     {
         // test warning
-        new Creation(new Cli(['neoan3-cli','new','test','component','endpoint'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','test','component','endpoint'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/already exists/');
     }
     public function testTestCreationMalFormed()
     {
         // test malformed
-        new Creation(new Cli(['neoan3-cli','new','test','component'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','test','component'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/Malformed command/');
     }
     public function testTestCreation()
     {
         // create component
-        $create = new Creation(new Cli(['neoan3-cli','new','component','newComponent', '-f:demo', '-t:api'],$this->workpath));
+        $create = new Creation(new Cli(['neoan3-cli','new','component','newComponent', '-f:demo', '-t:api'],$this->workpath), $this->mockDb);
         // test test creation
-        new Creation(new Cli(['neoan3-cli','new','test','component','newComponent'], $this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','test','component','newComponent'], $this->workpath), $this->mockDb);
         $this->assertFileExists($this->workpath . '/component/newComponent/NewComponentTest.php');
 
     }
     public function testComponentExists()
     {
         // test warning
-        new Creation(new Cli(['neoan3-cli','new','component','endpoint'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','component','endpoint'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/already exists/');
     }
     public function testComponentMalformed()
     {
         // test malformed
-        new Creation(new Cli(['neoan3-cli','new','component'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','component'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/Malformed command/');
     }
     public function testComponent()
@@ -93,32 +97,64 @@ class CreationTest extends TestCase
         $cli->addInput('y');
         // choose frame demo
         $cli->addInput(0);
-        new Creation($cli);
+        new Creation($cli, $this->mockDb);
         $this->expectOutputRegex('/What type of component/');
     }
     public function testFrame()
     {
         // test warning
-        new Creation(new Cli(['neoan3-cli','new','frame','demo'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','frame','demo'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/already exists/');
         // test malformed
-        new Creation(new Cli(['neoan3-cli','new','frame'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','frame'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/Malformed command/');
         // ok
-        new Creation(new Cli(['neoan3-cli','new','frame','testFrame'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','frame','testFrame'],$this->workpath), $this->mockDb);
         $this->assertFileExists($this->workpath . '/frame/testFrame/TestFrame.php');
     }
     public function testModel()
     {
         // ok
-        new Creation(new Cli(['neoan3-cli','new','model','test'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','model','test'],$this->workpath), $this->mockDb);
         $this->assertFileExists($this->workpath . '/model/test/Test.model.php');
         // test warning
-        new Creation(new Cli(['neoan3-cli','new','model','test'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','model','test'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/already exists/');
         // test malformed
-        new Creation(new Cli(['neoan3-cli','new','model'],$this->workpath));
+        new Creation(new Cli(['neoan3-cli','new','model'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/Malformed command/');
 
+    }
+    public function testDatabase()
+    {
+        $mockCli = new MockCli(['neoan3-cli','new','database','mock_db'], $this->workpath);
+        $mockCli->addInput(0);
+        $mockCli->addInput('x');
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockDb = new MockDatabaseWrapper([null]);
+        new Creation($mockCli, $mockDb);
+        $this->expectOutputRegex('/Successfully created database/');
+    }
+    public function testDatabaseFail()
+    {
+        $mockCli = new MockCli(['neoan3-cli','new','database','mock_db'], $this->workpath);
+        $mockCli->addInput(0);
+        $mockCli->addInput('x');
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockCli->addInput(0);
+        $mockDb = new MockDatabaseWrapper([new Exception()]);
+        new Creation($mockCli, $mockDb);
+        $this->expectOutputRegex('/Failed to run command/');
     }
 }
