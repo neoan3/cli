@@ -212,7 +212,7 @@ class Cli
         }
         switch ($this->arguments[0]){
             case 'new':
-                new Creation($this);
+                new Creation($this, new DatabaseWrapper());
                 break;
             case 'test':
                 $this->io('php ' . $this->workPath . '/vendor/phpunit/phpunit/phpunit --configuration ' . $this->workPath . '/phpunit.xml');

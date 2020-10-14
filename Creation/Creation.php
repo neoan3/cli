@@ -10,11 +10,14 @@ class Creation
 {
     private Cli $cli;
     public bool $workable = true;
-    function __construct(Cli $cli)
+    private \Migration\DataBase $database;
+
+    function __construct(Cli $cli, \Migration\DataBase $dataBase)
     {
         $this->cli = $cli;
+        $this->database = $dataBase;
         if($this->needed()){
-            if(!in_array($this->cli->arguments[1],['component','frame', 'model', 'app', 'test'])){
+            if(!in_array($this->cli->arguments[1],['component','frame', 'model', 'app', 'test', 'database'])){
                 $this->cli->printLn('Unknown command', 'red');
                 exit();
             }
@@ -26,7 +29,7 @@ class Creation
     function run()
     {
         $class = '\\Creation\\' . ucfirst($this->cli->arguments[1]);
-        $runner = new $class($this->cli);
+        $runner = new $class($this->cli, $this->database);
         return $runner->init();
     }
 
