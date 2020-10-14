@@ -171,8 +171,8 @@ class Migration
             echo "migrating $table\n";
             $db[$table] = [];
             foreach ($this->SqlHelper->describeTable($table) as $description) {
-                $key = $description['Key'] === 'PRI' ? 'primary' : false;
-                if ($description['Key'] === 'UNI') {
+                $key = strtolower(substr($description['Key'],0,3)) === 'pri' ? 'primary' : false;
+                if (strtolower(substr($description['Key'],0,3)) === 'uni') {
                     $key = 'unique';
                 }
                 $db[$table][$description['Field']] = [

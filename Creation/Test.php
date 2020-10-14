@@ -62,7 +62,7 @@ class Test
                     $passIn = ['method' => $method->name, 'paramString' => '', 'expected' => ''];
                     $params = $method->getParameters();
                     foreach ($params as $i => $param){
-                        $passIn['expected'] = $this->getParameterMock($param->getType()->getName());
+                        $passIn['expected'] = $this->getParameterMock($param->getType()->getName()) ?? '[]';
                         $passIn['paramString'] .= ($i > 0 ? ', ' : '') . $passIn['expected'];
                     }
                     switch (mb_substr($method->name,0,3)){
