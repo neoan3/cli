@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="font-lg">Route</h1>
+    <h1 class="font-lg">{{name.pascal}}</h1>
     <p class="text-primary">You can find this view in /component/{{name.pascal}}/{{name.camel}}.view.html</p>
     <div class="m-t-5 p-4 b-rounded b-1 b-primary">
         <h3 class="text-secondary font-default">Did you know?</h3>
