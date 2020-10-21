@@ -62,7 +62,13 @@ class Test
                     $passIn = ['method' => $method->name, 'paramString' => '', 'expected' => ''];
                     $params = $method->getParameters();
                     foreach ($params as $i => $param){
-                        $passIn['expected'] = $this->getParameterMock($param->getType()->getName()) ?? '[]';
+                        if(!$param->getType()){
+                            $this->cli->printLn("Warning: Missing parameter typing in method $method->name", 'red');
+                            $passIn['expected'] = '[]';
+                        } else {
+                            $passIn['expected'] = $this->getParameterMock($param->getType()->getName()) ?? '[]';
+                        }
+
                         $passIn['paramString'] .= ($i > 0 ? ', ' : '') . $passIn['expected'];
                     }
                     switch (mb_substr($method->name,0,3)){
