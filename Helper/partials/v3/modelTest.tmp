@@ -31,7 +31,7 @@ class {{name}}Test extends TestCase
     public function testGet()
     {
         $model = $this->mockDb->mockGet('{{name.camel}}');
-        {{name}}Model::init($this->mockDb);
+        {{name}}Model::init(['db'=>$this->mockDb]);
         $res = {{name}}Model::get($model['id']);
         $this->assertIsArray($res);
         $this->assertSame($model, $res);
@@ -45,7 +45,7 @@ class {{name}}Test extends TestCase
         $model = $this->mockDb->mockModel('{{name.camel}}');
         $model[array_keys($model)[0]] = 'abc';
         $this->mockDb->mockUpdate('{{name.camel}}', $model);
-        {{name}}Model::init($this->mockDb);
+        {{name}}Model::init(['db'=>$this->mockDb]);
         $result = {{name}}Model::update($model);
         $this->assertSame($result[array_keys($model)[0]], 'abc');
     }
@@ -58,7 +58,7 @@ class {{name}}Test extends TestCase
         $model = $this->mockDb->mockModel('{{name.camel}}');
         $this->mockDb->registerResult([['id' => '123456789']]);
         $inserted = $this->mockDb->mockUpdate('{{name.camel}}', $model);
-        {{name}}Model::init($this->mockDb);
+        {{name}}Model::init(['db'=>$this->mockDb]);
         $created = {{name}}Model::create($model);
         $this->assertSame($inserted, $created);
     }

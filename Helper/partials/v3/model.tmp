@@ -40,11 +40,15 @@ class {{name.pascal}}Model implements MySqlModel{
     }
 
     /**
-     * @param Database $database
+     * @param array $providers
      */
-    public static function init(Database $database)
+    public static function init(array $providers)
     {
-        self::$db = $database;
+        foreach ($providers as $key => $provider){
+            if($key === 'db'){
+                self::$db = $provider;
+            }
+        }
     }
 
 }
