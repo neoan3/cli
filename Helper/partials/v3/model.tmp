@@ -17,7 +17,7 @@ use Neoan3\Provider\MySql\Transform;
  * @method static delete(string $id, bool $hard = false)
  */
 
-class {{name.pascal}}Model implements MySqlModel{
+class {{name.pascal}}Model implements Model{
 
     /**
      * @var Database|null
