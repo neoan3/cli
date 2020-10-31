@@ -194,7 +194,7 @@ Running `neoan3 develop` will start the built-in PHP server using the provided r
 
 # Reporting issues
 
-The GitHub repo [neoan3-cli](https://github.com/sroehrl/neoan3-cli) is actively maintained. Please report issues there.
+The GitHub repo [neoan3-cli](https://github.com/neoan3/cli) is actively maintained. Please report issues there.
 
 # Collaborators wanted
 Over 10.000 neoan3 applications are waiting for documentation. I'd love to have some people to help me:
