@@ -4,7 +4,7 @@
 namespace Neoan3\Model\{{name.pascal}};
 
 use Neoan3\Provider\MySql\Database;
-use Neoan3\Provider\MySql\MySqlModel;
+use Neoan3\Provider\Model\Model;
 use Neoan3\Provider\MySql\Transform;
 
 /**
