@@ -30,7 +30,8 @@ class Frame
             $this->cli->printLn('neoan3 new frame <frameName>');
             return;
         }
-        $this->folder = $this->cli->workPath . '/frame/' . Ops::toCamelCase($this->cli->arguments[2]);
+        $opsMethod = $this->cli->versionHelper->appMainVersion < 3 ? 'toCamelCase' : 'toPascalCase';
+        $this->folder = $this->cli->workPath . '/frame/' . Ops::$opsMethod($this->cli->arguments[2]);
         if($this->frameExists()){
             return;
         }
