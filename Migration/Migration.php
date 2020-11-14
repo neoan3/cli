@@ -149,7 +149,9 @@ class Migration
                     $migrate[$tableKey] = $knownTable;
                 }
             }
-            file_put_contents($this->cli->workPath . "/model/$modelKey/migrate.json", json_encode($migrate));
+            $opsMethod = $this->cli->versionHelper->casing;
+            $folder = Ops::$opsMethod($modelKey);
+            file_put_contents($this->cli->workPath . "/model/$folder/migrate.json", json_encode($migrate));
         }
     }
 

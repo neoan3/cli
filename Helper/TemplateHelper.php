@@ -18,7 +18,7 @@ class TemplateHelper
         $this->fileHelper = new FileHelper($cli);
         $this->cli = $cli;
 
-        $opsMethod = $this->cli->versionHelper->appMainVersion < 3 ? 'toCamelCase' : 'toPascalCase';
+        $opsMethod = $this->cli->versionHelper->casing;
         if(isset($this->cli->arguments[2])){
             $this->componentFolder = $this->cli->workPath . '/component/' . Ops::$opsMethod($this->cli->arguments[2]) . '/';
             $this->modelFolder = $this->cli->workPath . '/model/' . Ops::$opsMethod($this->cli->arguments[2]) . '/';

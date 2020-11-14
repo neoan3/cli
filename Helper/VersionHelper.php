@@ -9,11 +9,13 @@ use Cli\Cli;
 class VersionHelper
 {
     private Cli $cli;
-    public string $appMainVersion;
+    public int $appMainVersion = 2;
+    public string $casing;
     public function __construct(Cli $cli)
     {
         $this->cli = $cli;
         $this->retrieveNeoanVersion();
+        $this->casing = $this->appMainVersion && $this->appMainVersion > 2 ? 'toPascalCase' : 'toCamelCase';
     }
     public function printCliVersion()
     {
