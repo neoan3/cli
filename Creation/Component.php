@@ -133,7 +133,7 @@ class Component
         $viewTemplate = $this->template->readTemplate('ce.html');
         if($viewTemplate){
             $viewTemplate = $this->template->substituteVariables($phpTemplate);
-            file_put_contents($this->folder . '/' . Ops::toPascalCase($this->cli->arguments[2]) . '.ce.html', $viewTemplate);
+            file_put_contents($this->folder . '/' . Ops::toCamelCase($this->cli->arguments[2]) . '.ce.html', $viewTemplate);
         }
     }
     function writeApi()

@@ -69,7 +69,7 @@ class CreationTest extends TestCase
         $create = new Creation(new Cli(['neoan3-cli','new','component','newComponent', '-f:demo', '-t:api'],$this->workpath), $this->mockDb);
         // test test creation
         new Creation(new Cli(['neoan3-cli','new','test','component','newComponent'], $this->workpath), $this->mockDb);
-        $this->assertFileExists($this->workpath . '/component/newComponent/NewComponentTest.php');
+        $this->assertFileExists($this->workpath . '/component/NewComponent/NewComponentTest.php');
 
     }
     public function testComponentExists()
@@ -110,13 +110,13 @@ class CreationTest extends TestCase
         $this->expectOutputRegex('/Malformed command/');
         // ok
         new Creation(new Cli(['neoan3-cli','new','frame','testFrame'],$this->workpath), $this->mockDb);
-        $this->assertFileExists($this->workpath . '/frame/testFrame/TestFrame.php');
+        $this->assertFileExists($this->workpath . '/frame/TestFrame/TestFrame.php');
     }
     public function testModel()
     {
         // ok
         new Creation(new Cli(['neoan3-cli','new','model','test'],$this->workpath), $this->mockDb);
-        $this->assertFileExists($this->workpath . '/model/test/Test.model.php');
+        $this->assertFileExists($this->workpath . '/model/Test/TestModel.php');
         // test warning
         new Creation(new Cli(['neoan3-cli','new','model','test'],$this->workpath), $this->mockDb);
         $this->expectOutputRegex('/already exists/');
