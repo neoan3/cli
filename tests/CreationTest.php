@@ -69,7 +69,7 @@ class CreationTest extends TestCase
         $create = new Creation(new Cli(['neoan3-cli','new','component','newComponent', '-f:demo', '-t:api'],$this->workpath), $this->mockDb);
         // test test creation
         new Creation(new Cli(['neoan3-cli','new','test','component','newComponent'], $this->workpath), $this->mockDb);
-        $this->assertFileExists($this->workpath . '/component/newComponent/NewComponentTest.php');
+        $this->assertFileExists($this->workpath . '/component/NewComponent/NewComponentTest.php');
 
     }
     public function testComponentExists()
