@@ -11,12 +11,14 @@ class CredentialHelper
     private Cli $cli;
     public array $credentials;
     public string $currentCredentialName = '';
+    private TemplateHelper $templateHelper;
     function __construct(Cli $cli)
     {
         $this->cli = $cli;
         if(file_exists($this->cli->workPath . '/_neoan/base/functions.php')){
             require_once $this->cli->workPath . '/_neoan/base/functions.php';
         }
+        $this->templateHelper = new TemplateHelper($cli);
     }
     function readCredentials()
     {
@@ -34,9 +36,13 @@ class CredentialHelper
             $this->credentials[$input] = [];
             $this->currentCredentialName = $input;
         });
-        if(!empty($targetStructure)){
-            foreach($targetStructure as $key => $value){
-                $this->addCredentialValue($key,$value);
+        if($templateStructure = $this->templateHelper->readTemplate($this->currentCredentialName . '.json')){
+            foreach (json_decode($templateStructure, true) as $key => $value) {
+                $this->addCredentialValue($key, $value);
+            }
+        } elseif (!empty($targetStructure)) {
+            foreach ($targetStructure as $key => $value) {
+                $this->addCredentialValue($key, $value);
             }
         } else {
             $this->addCredentialKey();
