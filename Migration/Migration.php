@@ -92,28 +92,21 @@ class Migration
             foreach ($knownModel as $targetTable => $columns) {
 
                 if (isset($this->knownTables[$targetTable])) {
-                    try {
-                        $this->db->query(">ALTER TABLE `$targetTable` DROP PRIMARY KEY");
-                    } catch (\Exception $e) {
-                        $this->cli->printLn("SQL Error: " . $e->getMessage());
-                    }
                     $sql = "ALTER TABLE `$targetTable`\n";
                     foreach ($columns as $columnKey => $columnValue) {
-
                         if (isset($this->knownTables[$targetTable][$columnKey])) {
+                            $this->dropKey($targetTable, $columnKey, $columnValue);
                             $sql .= "\tMODIFY " . $this->sqlRow($columnKey, $columnValue);
                         } else {
                             $sql .= "\tADD COLUMN " . $this->sqlRow($columnKey, $columnValue);
                         }
+                        $this->addKey($targetTable, $columnKey, $columnValue);
                     }
                     $sql = substr($sql, 0, -2) . "\n";
                 } else {
                     $unique = '';
                     $sql = "CREATE TABLE `$targetTable`(\n";
                     foreach ($columns as $columnKey => $columnValue) {
-                        if ($columnValue['key'] === 'unique') {
-                            $unique .= "\tUNIQUE(`$columnKey`),\n";
-                        }
                         $sql .= $this->sqlRow($columnKey, $columnValue);
                     }
                     $sql .= $unique;
@@ -129,13 +122,39 @@ class Migration
             }
         }
     }
+    function dropKey($table, $column, $value){
+        if($value['key']){
+            $keyMatch = [
+                'primary'=>'PRIMARY KEY', 'unique'=>"KEY $column", true => "KEY $column"
+            ];
+            $sql = ">ALTER TABLE `$table` DROP " . $keyMatch[$value['key']];
+            try {
+                $this->db->query($sql);
+            } catch (\Exception $e) {
+                $this->cli->printLn("SQL Warning: " . $e->getMessage());
+            }
+        }
+    }
+    function addKey($table, $column, $value){
+        if($value['key']){
+            $keyMatch = [
+                'primary'=>"PRIMARY KEY(`$column`)",
+                'unique'=>"CONSTRAINT `$column` UNIQUE (`$column`)",
+                true => "KEY (`$column`)"];
+            $sql = ">ALTER TABLE `$table` ADD " . $keyMatch[$value['key']];
+            try {
+                $this->db->query($sql);
+            } catch (\Exception $e) {
+                $this->cli->printLn("NOTICE: " . $e->getMessage() . "\nThis is likely not an issue.");
+            }
+        }
+    }
 
-    function sqlRow($columnKey, $columnValue)
+    function sqlRow($columnKey, $columnValue): string
     {
         $sql = "\t`$columnKey`\t{$columnValue['type']}\t";
         $sql .= $columnValue['default'] ? 'default ' . $this->defaultQuotes($columnValue['type'], $columnValue['default']) : '';
         $sql .= "\t" . (!$columnValue['nullable'] ? 'not null' : 'null');
-        $sql .= "\t" . ($columnValue['key'] === 'primary' ? 'primary key' : '');
         $sql .= ",\n";
         return $sql;
     }
@@ -173,10 +192,9 @@ class Migration
             echo "migrating $table\n";
             $db[$table] = [];
             foreach ($this->SqlHelper->describeTable($table) as $description) {
-                $key = strtolower(substr($description['Key'],0,3)) === 'pri' ? 'primary' : false;
-                if (strtolower(substr($description['Key'],0,3)) === 'uni') {
-                    $key = 'unique';
-                }
+                $index = strtolower(substr($description['Key'],0,3));
+                $keyMatch = ['pri'=>'primary', 'uni'=>'unique','mul' => true, '' => false];
+                $key = $keyMatch[$index] ?? false;
                 $db[$table][$description['Field']] = [
                     'type' => $description['Type'],
                     'key' => $key,
@@ -190,7 +208,7 @@ class Migration
         $this->knownTables = $db;
     }
 
-    private function defaultQuotes($type, $value)
+    private function defaultQuotes($type, $value): string
     {
         if (preg_match('/enum|varchar|text|longtext|mediumtext/', $type) === 1) {
             return '"' . $value . '"';
