@@ -54,7 +54,7 @@ please omit the last parameter. **Deployment**: It is likely that you will have 
 In most cases, changing the RewriteBase should be enough.
 
 ### new component
-`neoan3 new component [component-name] [-v:version]`
+`neoan3 new component [component-name]`
 
 This command will guide you through the creation of a new component, prefilling the controller according to your choices.
 - api (generates get & post functions using a particular frame)
