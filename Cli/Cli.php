@@ -161,6 +161,9 @@ class Cli
                         $wait = $this->closeStream();
                         $closure('x');
                         break;
+                    case '101':
+                        $closure($e);
+                        break;
                     case '89':
                     case '121':
                     case '10':
