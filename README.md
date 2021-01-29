@@ -119,6 +119,14 @@ $credentials = getCredentials();
 $sendgridCredentials = $credentials['sendgrid'];
 ```
 
+_NOTE_ 
+
+By default the cli tries to work with a folder "credentials" in the root of your current drive.
+You can influence this behavior by setting it to another location e.g.
+
+`neoan3 set credential-path /home/myUser`
+
+Remember to pass in the same path within your neoan3 project when calling the global function _getCredentials($path)_.
 
 ## migrate
 

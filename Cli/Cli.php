@@ -18,6 +18,7 @@ class Cli
     public array $flags = [];
     public string $workPath;
     public VersionHelper $versionHelper;
+    public array $globalVars;
     public string $ascii = "\e[32m\n" .
     "::::    ::: :::::::::: ::::::::      :::     ::::    :::  ::::::::  \n" .
     ":+:+:   :+: :+:       :+:    :+:   :+: :+:   :+:+:   :+: :+:    :+: \n" .
@@ -30,11 +31,11 @@ class Cli
 
     function __construct($arguments, $workPath)
     {
-
         $this->workPath = $workPath;
         array_shift($arguments);
         $this->argumentConstructor($arguments);
         $this->versionHelper = new VersionHelper($this);
+        $this->globalVars = json_decode(file_get_contents(dirname(__DIR__) . '/bin/_vars.json'), true);
     }
     private function argumentConstructor($arguments)
     {

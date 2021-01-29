@@ -22,10 +22,14 @@ class CredentialHelper
         $this->templateHelper = new TemplateHelper($cli);
     }
 
-    function readCredentials()
+    function readCredentials(): array
     {
         try {
-            $this->credentials = getCredentials();
+            if(isset($this->cli->globalVars['credential-path'])){
+                $this->credentials = getCredentials($this->cli->globalVars['credential-path'] . '/credentials.json');
+            } else {
+                $this->credentials = getCredentials();
+            }
             return $this->credentials;
         } catch (\Exception $e) {
             return [];
@@ -61,9 +65,10 @@ class CredentialHelper
         $systemPath = isset($vars['Path']) ? $vars['Path'] : (isset($vars['PATH']) ? $vars['PATH'] : '');
         preg_match('/^[A-Z]:/', $systemPath, $matches);
 
-        $path = (isset($matches[0]) ? $matches[0] : '') . DIRECTORY_SEPARATOR . 'credentials' . DIRECTORY_SEPARATOR . 'credentials.json';
+        $path = (isset($matches[0]) ? $matches[0] : '') . DIRECTORY_SEPARATOR . 'credentials';
+        $path = $this->cli->globalVars['credential-path'] ?? $path;
         if (is_writeable($path)) {
-            file_put_contents($path, json_encode($this->credentials));
+            file_put_contents($path . DIRECTORY_SEPARATOR . 'credentials.json', json_encode($this->credentials));
         } else {
             $this->cli->printLn('Failed to store credentials: permission denied for ' . $path, 'red');
             $this->cli->printLn('Please ensure the folder is writable. ', 'red');

@@ -24,9 +24,24 @@ class Set
             case 'default_404':
                 $this->writeDefault($this->cli->arguments[1],$this->cli->arguments[2]);
                 break;
+            case 'credential-path':
+                $this->writeGlobal($this->cli->arguments[1],$this->cli->arguments[2]);
+                break;
             default:
                 $this->cli->printLn('Unknown or unsupported variable', 'red');
         }
+    }
+    function writeGlobal($var, $value)
+    {
+        try{
+            $location = dirname(__DIR__) . '/bin/_vars.json';
+            $env = json_decode(file_get_contents($location), true);
+            $env[$var] = $value;
+            file_put_contents($location, json_encode($env));
+        } catch (\Exception $e) {
+            $this->cli->printLn('Unable to write global config', 'red');
+        }
+
     }
 
     function writeDefault($defaultKey, $newDefault)
