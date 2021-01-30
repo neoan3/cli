@@ -119,6 +119,14 @@ $credentials = getCredentials();
 $sendgridCredentials = $credentials['sendgrid'];
 ```
 
+_NOTE_ 
+
+By default the cli tries to work with a folder "credentials" in the root of your current drive.
+You can influence this behavior by setting it to another location e.g.
+
+`neoan3 set credential-path /home/myUser`
+
+Remember to pass in the same path within your neoan3 project when calling the global function _getCredentials($path)_.
 
 ## migrate
 
@@ -178,6 +186,7 @@ The following files are respected:
 | ce.php | Custom element | name  | *PHP files for custom element is only generated if template is present |
 | ce.js | Custom element | name | |
 | ce.html | Custom element | name | |
+| *.json | credentials | | uses own name to hook into boilerplating credential creation |
 
 **_Casing:_** By default variables are translated to PascalCase. 
 Depending on your needs, you have the following possibilities for your casing:

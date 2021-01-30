@@ -48,8 +48,9 @@ class App
             $this->htaccessRewrite();
             // write readme
             $this->writeReadme();
-            echo "Dependencies...";
-            $this->cli->io('composer update -d ' . $this->cli->workPath);
+            $this->cli->printLn("Dependency installation...");
+            $this->cli->io('composer install --no-dev -d ' . $this->cli->workPath);
+            $this->cli->printLn("Skipped dev-dependencies like PHPUnit: run 'composer update' before testing!",'magenta');
         } catch (\Exception $e){
             $this->cli->printLn("Warning: unable to process app.zip");
             return;
