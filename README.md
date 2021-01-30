@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.com/neoan3/cli.svg?branch=master)](https://travis-ci.com/neoan3/cli)
 [![Maintainability](https://api.codeclimate.com/v1/badges/29a1891ab06fe6be7b2e/maintainability)](https://codeclimate.com/github/neoan3/cli/maintainability)
 [![neoan3](https://img.shields.io/badge/official%20tool-neoan3-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACVklEQVRYR+2VT0iTYRjAf990i7nNNs1viyiT/SkPEbKioMQygrIOYSpE1w51sA4RhAhegg5Rp87dghAWFURBVxUFbUZEpW1LTdwm+K/Npdv8OqzZt3dzrg56+X7H53lenh/P8/K+0qHmowrbiE4MbDWagCagCWgCJQnIrmUxVBCjNUn7o6803ZjE7o6L6YIUFZDdcVq6gjTfmhBTeeh3pDnfFaJq7wpTHyycvjlJS1dwU/lyMQBg98Txtocxy0n8PjvjfVaxJBedwtnbE9TU/eLT2yqCAzaCg1Y8jfOc6pwkFtUz3OsgOm4STyKpPyO7J463I0yFLYX/uUyg3wpIqvLCNF2f4uCZeaIBIy+7naylVIOVFJwnFvC2RonNlTPS6yAy9ldkfQIXugMYK9OM+GRCQzsppXEGBYtjhZWYjncPa3ObAygSgT4bgT4rdccWabw2TWKpjNf3nIB6BTpYA5R/+Jyr9iUwVScZeLIHc3WS2KxBLMlBUTI91DcvbwVHOsIYbSne+2SCAxuvwGBK0fZgDEtNitEXNQw93S2W/CGzgobWKIn5coaFFeQIZMneBfOuFH6fzHi/FdbUIgrn7n6n1vuTmS9GXvW4hDygU3CfXKDhcoTYrD5v91kKCmSR3ZmJVDpWedZZvx4/fCnC8asREks6fHc8xOfyR3/l8WcWZwwb3v4sRQWyyK5lot8qAHDUx7nYE0CS4M39/fwYrRSqM6jPFKMkATVlhjSOA8sYTGlCg5u8DyVQ8CEqRnq1jOmPFjH83xR9ircCTUAT0AQ0gW0X+A3UX84kMp7NmAAAAABJRU5ErkJggg==&colorA=2d4235)](https://neoan3.rocks)
-
+[![Discord](https://img.shields.io/discord/701820506671677580?label=discord&style=flat)](https://discord.gg/vjRgWUG)
 
 ## Automate your [neoan3](https://neoan3.rocks) needs
 
@@ -14,15 +14,14 @@
     2. [component](#new-component)
     3. [frame](#new-frame)
     4. [model](#new-model)
-4. [Installing (third party) scripts](#install)
-5. [Reusing components/frames/models](#add)
-6. [Handling credentials](#credentials)
-7. [Database migration](#migrate)
-8. [Publishing components/frames/models to be reused](#publish)
-9. [File creation templating](#templates)
-10. [Development server](#development-server-shortcut)
-11. [Reporting issues](#reporting-issues)
-12. [Collaboration](#collaborators-wanted)
+4. [Reusing components/frames/models](#add)
+5. [Handling credentials](#credentials)
+6. [Database migration](#migrate)
+7. [Publishing components/frames/models to be reused](#publish)
+8. [File creation templating](#templates)
+9. [Development server](#development-server-shortcut)
+10. [Reporting issues](#reporting-issues)
+11. [Collaboration](#collaborators-wanted)
     
 
 ### Requires

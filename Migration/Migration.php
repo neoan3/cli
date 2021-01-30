@@ -90,7 +90,7 @@ class Migration
     {
         foreach ($this->knownModels as $modelKey => $knownModel) {
             foreach ($knownModel as $targetTable => $columns) {
-
+                $constraints = [];
                 if (isset($this->knownTables[$targetTable])) {
                     $sql = "ALTER TABLE `$targetTable`\n";
                     foreach ($columns as $columnKey => $columnValue) {
@@ -100,21 +100,27 @@ class Migration
                         } else {
                             $sql .= "\tADD COLUMN " . $this->sqlRow($columnKey, $columnValue);
                         }
-                        $this->addKey($targetTable, $columnKey, $columnValue);
+                        $constraints[] = [$targetTable, $columnKey, $columnValue];
                     }
                     $sql = substr($sql, 0, -2) . "\n";
                 } else {
-                    $unique = '';
+
                     $sql = "CREATE TABLE `$targetTable`(\n";
                     foreach ($columns as $columnKey => $columnValue) {
                         $sql .= $this->sqlRow($columnKey, $columnValue);
+                        if($columnValue['key']){
+                            $constraints[] = [$targetTable, $columnKey, $columnValue];
+                        }
                     }
-                    $sql .= $unique;
                     $sql = substr($sql, 0, -2);
                     $sql .= "\n)";
                 }
                 try {
                     $this->db->query('>' . $sql);
+                    foreach ($constraints as $constraint){
+                        $this->addKey(...$constraint);
+                    }
+
                 } catch (\Exception $e) {
                     $this->cli->printLn('SQL Error: ' . $e->getMessage(), 'red');
                     $this->cli->printLn('Executed: ' . $sql, 'red');
