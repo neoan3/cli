@@ -84,7 +84,7 @@ class CredentialHelper
         });
         $this->cli->printLn('Add another property? [Y/n]', 'green');
         $this->cli->waitForSingleInput(function ($input) {
-            if ($input == 'default' || $input == '' || strtolower($input) == 'y') {
+            if ($input == 'default' || $input === '' || strtolower($input) == 'y') {
                 $this->addCredentialKey();
             }
         });
