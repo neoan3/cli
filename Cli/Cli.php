@@ -163,7 +163,7 @@ class Cli
                         $closure('x');
                         break;
                     case '101':
-                        $closure($e);
+                        $closure('e');
                         break;
                     case '89':
                     case '121':
