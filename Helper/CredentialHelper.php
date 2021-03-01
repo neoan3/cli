@@ -24,6 +24,11 @@ class CredentialHelper
 
     function readCredentials(): array
     {
+        if(!function_exists('getCredentials')){
+            $this->cli->printLn('It seems like you are not in a neoan3 project directory!','red');
+            $this->cli->printLn('Stop this script and navigate into or create a neoan3 app','red');
+            return [];
+        }
         try {
             if(isset($this->cli->globalVars['credential-path'])){
                 $this->credentials = getCredentials($this->cli->globalVars['credential-path'] . '/credentials.json');
