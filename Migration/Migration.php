@@ -29,7 +29,7 @@ class Migration
         $this->process();
     }
 
-    function checkProperFormat()
+    function checkProperFormat(): bool
     {
         $ok = true;
         if (!isset($this->cli->arguments[2])) {
@@ -64,7 +64,9 @@ class Migration
             'port' => 3306,
             'assumes_uuid' => 'true'
         ];
-        $this->credentials->chooseCredentials($format);
+        if(!$this->credentials->flagIsSet()){
+            $this->credentials->chooseCredentials($format);
+        }
         $this->SqlHelper = new SqlHelper($this->credentials->currentCredentials, $this->db);
     }
 
