@@ -39,6 +39,16 @@ class Credentials
         });
         $this->credentialHelper->saveCredentials();
     }
+    function flagIsSet() : bool
+    {
+        if(isset($this->cli->flags['c'])){
+            $this->credentialHelper->currentCredentialName = array_keys($this->credentialArray)[$this->fromAlphaNumeric($this->cli->flags['c'])];
+            $this->currentCredentials = $this->credentialHelper->credentials[$this->credentialHelper->currentCredentialName];
+            return true;
+        }
+        return false;
+    }
+
     function chooseCredentials(array $format = []):void
     {
         $i = 0;
