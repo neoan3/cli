@@ -4,6 +4,7 @@
 namespace Cli;
 
 
+use Add\Package;
 use Creation\Creation;
 use Credentials\Credentials;
 use Helper\ServerHelper;
@@ -214,6 +215,9 @@ class Cli
             return;
         }
         switch ($this->arguments[0]){
+            case 'add':
+                new Package($this);
+                break;
             case 'new':
                 new Creation($this, new DatabaseWrapper());
                 break;
