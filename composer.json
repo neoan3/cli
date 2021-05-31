@@ -10,6 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
+            "Add\\": "Add",
             "Creation\\": "Creation",
             "Migration\\": "Migration",
             "Cli\\": "Cli",

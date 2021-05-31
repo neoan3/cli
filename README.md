@@ -79,7 +79,7 @@ This command executes external installation scripts in cases where composer cann
 In most cases you want to use "add" instead of "install" to ensure proper collaboration.
 This command is normally used to simplify installation of 3rd party applications.
 
-## add (not yet implemented)
+## add 
 `neoan3 add [destination] [package] ([repository-endpoint])`
 
 Adding components makes the following assumptions:

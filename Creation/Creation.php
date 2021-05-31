@@ -33,7 +33,7 @@ class Creation
         return $runner->init();
     }
 
-    function needed()
+    function needed(): bool
     {
         // new [what] [name]
         if(!isset($this->cli->arguments[1])){
