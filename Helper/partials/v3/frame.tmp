@@ -5,6 +5,7 @@
 
 namespace Neoan3\Frame;
 
+use Exception;
 use Neoan3\Core\Serve;
 use Neoan3\Provider\MySql\Database;
 use Neoan3\Provider\MySql\DatabaseWrapper;
