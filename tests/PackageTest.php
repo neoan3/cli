@@ -22,7 +22,7 @@ class PackageTest extends TestCase
     static function tearDownAfterClass(): void
     {
         $c = new FileHelper(new Cli([],__DIR__. '/addPackage'));
-//        $c->deleteRecursively(__DIR__ . '/addPackage/');
+        $c->deleteRecursively(__DIR__ . '/addPackage/');
     }
     public function testNeeded()
     {
@@ -37,7 +37,8 @@ class PackageTest extends TestCase
     }
     public function testComponent()
     {
-        new Package(new Cli(['neoan3-cli','add', 'component', 'sroehrl/neoan3-pwa', 'https://github.com/sroehrl/neoan3Pwa.git'],__DIR__. '/addPackage'));
+
+        new Cli(['neoan3-cli','add', 'component', 'sroehrl/neoan3-pwa', 'https://github.com/sroehrl/neoan3Pwa.git'],__DIR__. '/addPackage');
         $this->assertFileExists(__DIR__. '/addPackage/component/Neoan3Pwa/n3.png');
     }
 
