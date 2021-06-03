@@ -9,6 +9,7 @@
       <directory>./tests</directory>
       <directory>./vendor</directory>
       <directory>./Helper/partials</directory>
+      <file>./Helper/ServerHelper.php</file>
       <directory>./playground</directory>
     </exclude>
     <report>
