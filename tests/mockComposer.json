@@ -1,0 +1,41 @@
+{
+  "name": "sroehrl/neoan3",
+  "version": "3.1.0",
+  "description": "the efficient PHP framework",
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.4||8.*",
+    "ext-json": "*",
+    "mnsami/composer-custom-directory-installer": "2.*",
+    "ext-mbstring": "*"
+  },
+
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "neoan",
+      "email": "neoan@neoan.us"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Neoan3\\Core\\": "./_neoan/base/",
+      "Neoan3\\Api\\": "./_neoan/api/",
+      "Neoan3\\Model\\": "./model/",
+      "Neoan3\\Component\\": "./component/",
+      "Neoan3\\Provider\\": "./provider/"
+
+    },
+    "files": [
+      "_neoan/base/_includes.php"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "./frame/{$name}": [],
+      "./model/{$name}": [],
+      "./component/{$name}": [],
+      "./provider/{$name}": []
+    }
+  }
+}
