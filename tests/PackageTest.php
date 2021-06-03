@@ -22,7 +22,7 @@ class PackageTest extends TestCase
     static function tearDownAfterClass(): void
     {
         $c = new FileHelper(new Cli([],__DIR__. '/addPackage'));
-     //   $c->deleteRecursively(__DIR__ . '/addPackage/');
+        $c->deleteRecursively(__DIR__ . '/addPackage/');
     }
     public function testNeeded()
     {

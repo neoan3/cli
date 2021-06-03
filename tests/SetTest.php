@@ -34,6 +34,11 @@ class SetTest extends TestCase
         $this->assertStringContainsString('\'judy\'',$c);
         $this->assertStringContainsString('\'error\'',$c);
     }
+    public function testGlobal()
+    {
+        new Set(new Cli(['neoan3-cli', 'set', 'credential-path',  '/some-path'], $this->workPath ));
+        $this->assertStringContainsString('/some-path', file_get_contents(dirname(__DIR__) . '/bin/_vars.json'));
+    }
 
     private function ensureDefault()
     {
@@ -51,6 +56,7 @@ class SetTest extends TestCase
                 unlink($path);
             }
         }
+        file_put_contents(dirname(__DIR__) . '/bin/_vars.json','{}');
 
     }
 }

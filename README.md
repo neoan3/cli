@@ -104,7 +104,7 @@ _example_
 Please note that the name (here: custom-model/products) must be the name of specified in your composer.json of the neoan3-entity.
 See [publish](#publish).
 
-## credentials
+## credentials & variables
 
 It is recommended to store static credentials (like smtp, API-tokens etc) outside the web root. 
 This command attempts to mange such credentials in a folder "credentials" and a file credentials.json
