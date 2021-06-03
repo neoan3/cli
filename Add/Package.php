@@ -28,6 +28,7 @@ class Package
             $this->composer = json_decode($composerFile, true);
             $this->write();
             $this->cli->printLn("Installation...");
+            chdir($this->cli->workPath);
             $this->cli->io('composer update --no-dev -d ' . $this->cli->workPath);
             $this->cli->printLn("Don't forget to run `neoan3 migrate models up`", "magenta");
         } else {

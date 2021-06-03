@@ -31,6 +31,7 @@
         "neoan3-apps/ops": "^2.0",
         "ext-readline": "*",
         "ext-json": "*",
+        "composer/composer": "2.0.14",
         "neoan3-apps/db": "^0.3",
         "ext-mbstring": "*"
     },
