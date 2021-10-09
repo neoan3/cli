@@ -41,7 +41,7 @@ class Cli
     private function argumentConstructor($arguments)
     {
         foreach ($arguments as $arg){
-            preg_match('/^-{1,2}([a-z0-9]+):*([a-z0-9.]*)/i', $arg, $matches);
+            preg_match('/^-{1,2}([a-z0-9]+):*([a-z0-9_.-]*)/i', $arg, $matches);
             if(!empty($matches[1])){
                 $this->flags[$matches[1]] = (!empty($matches[2]) || is_numeric($matches[2])) ? $matches[2] : true;
             } else {

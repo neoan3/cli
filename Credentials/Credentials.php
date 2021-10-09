@@ -46,27 +46,36 @@ class Credentials
             $this->currentCredentials = $this->credentialHelper->credentials[$this->credentialHelper->currentCredentialName];
             return true;
         }
+        if(isset($this->cli->flags['n'])){
+            $this->credentialHelper->currentCredentialName = $this->cli->flags['n'];
+            $this->currentCredentials = $this->credentialHelper->credentials[$this->credentialHelper->currentCredentialName];
+            return true;
+        }
         return false;
     }
 
     function chooseCredentials(array $format = []):void
     {
-        $i = 0;
-        $this->cli->printLn('Choose credentials', 'green');
-        foreach ($this->credentialArray as $key => $credential) {
-            $this->cli->printLn('[' . $this->toAlphaNumeric($i) . '] ' . $key, 'green');
-            $i++;
-        }
-        $this->cli->printLn('[x] create new credentials', 'yellow');
-        $this->cli->waitForSingleInput(function ($input) use ($format ) {
-            if ($input === 'x' || $input === '') {
-                $this->cli->printLn('');
-                $this->credentialHelper->createNew($format);
-            } else {
-                $this->credentialHelper->currentCredentialName = array_keys($this->credentialArray)[$this->fromAlphaNumeric($input)];
+        if(!$this->flagIsSet()){
+            $i = 0;
+            $this->cli->printLn('Choose credentials', 'green');
+            foreach ($this->credentialArray as $key => $credential) {
+                $this->cli->printLn('[' . $this->toAlphaNumeric($i) . '] ' . $key, 'green');
+                $i++;
             }
-            $this->currentCredentials = $this->credentialHelper->credentials[$this->credentialHelper->currentCredentialName];
-        });
+            $this->cli->printLn('[x] create new credentials', 'yellow');
+
+            $this->cli->waitForSingleInput(function ($input) use ($format ) {
+                if ($input === 'x' || $input === '') {
+                    $this->cli->printLn('');
+                    $this->credentialHelper->createNew($format);
+                } else {
+                    $this->credentialHelper->currentCredentialName = array_keys($this->credentialArray)[$this->fromAlphaNumeric($input)];
+                }
+                $this->currentCredentials = $this->credentialHelper->credentials[$this->credentialHelper->currentCredentialName];
+            });
+        }
+
     }
     function fromAlphaNumeric($input)
     {
