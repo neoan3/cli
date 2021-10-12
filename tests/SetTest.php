@@ -31,8 +31,8 @@ class SetTest extends TestCase
         new Set(new Cli(['neoan3-cli', 'set', 'default_ctrl', 'judy'], $this->workPath ));
         new Set(new Cli(['neoan3-cli', 'set', 'default_404', 'error'], $this->workPath ));
         $c = file_get_contents($this->workPath . '/default.php');
-        $this->assertStringContainsString('\'judy\'',$c);
-        $this->assertStringContainsString('\'error\'',$c);
+        $this->assertStringContainsString('"judy"',$c);
+        $this->assertStringContainsString('"error"',$c);
     }
     public function testGlobal()
     {

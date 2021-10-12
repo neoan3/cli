@@ -101,7 +101,7 @@ _example_
 
 `neoan3 add model custom-model/products https://github.com/yourName/yourPackage.git`
 
-Please note that the name (here: custom-model/products) must be the name of specified in your composer.json of the neoan3-entity.
+Please note that the name (here: custom-model/products) must be the name as specified in your composer.json of the neoan3-entity.
 See [publish](#publish).
 
 ## credentials & variables
