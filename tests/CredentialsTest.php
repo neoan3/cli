@@ -4,6 +4,8 @@
 use Credentials\Credentials;
 use PHPUnit\Framework\TestCase;
 require_once 'MockCli.php';
+
+
 class CredentialsTest extends TestCase
 {
     private string $workPath;
@@ -45,8 +47,11 @@ class CredentialsTest extends TestCase
         $h = new CredentialHelper($mock);
         $h->createNew();*/
         $cli = new MockCli(['neoan3', 'credentials', '-n:cli-test-credentials'], $this->workPath);
+        $cli->globalVars['credential-path'] = __DIR__;
+        $cli->addInput('x');
         $c = new Credentials($cli);
         $c->chooseCredentials();
+        $c->displayCredentials();
         $this->expectOutputRegex('/some:/');
     }
 
