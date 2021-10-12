@@ -22,7 +22,10 @@ class Set
         switch($this->cli->arguments[1]){
             case 'default_ctrl':
             case 'default_404':
-                $this->writeDefault($this->cli->arguments[1],$this->cli->arguments[2]);
+                $this->writeDefault($this->cli->arguments[1],$this->cli->arguments[2], 'string');
+                break;
+            case 'allowed_origins':
+                $this->writeDefault($this->cli->arguments[1],$this->cli->arguments[2], 'array');
                 break;
             case 'credential-path':
                 $this->writeGlobal($this->cli->arguments[1],$this->cli->arguments[2]);
@@ -44,11 +47,14 @@ class Set
 
     }
 
-    function writeDefault($defaultKey, $newDefault)
+    function writeDefault($defaultKey, $newDefault, $type)
     {
-        $pattern = "/(define\('$defaultKey',\s*')([a-z0-9]+)('\);)/i";
+        $patternDefine = "/(define\('$defaultKey',\s*)([^)]+)(\);)/i";
+        $patternConst = "/(const\s$defaultKey)([^;]+)/";
+        $newDefault = $type === 'array' ? '["' . implode('", "', explode(',',$newDefault)) . '"]' : '"' . $newDefault . '"';
         if($current = $this->handleDefaultFile()){
-            $output = preg_replace($pattern, "$1$newDefault$3", $current);
+            $output = preg_replace($patternDefine, "$1$newDefault$3", $current);
+            $output = preg_replace($patternConst, "$1 = $newDefault", $output);
             $this->handleDefaultFile($output);
         }
 

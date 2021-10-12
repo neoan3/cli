@@ -23,6 +23,33 @@ class CredentialsTest extends TestCase
         $this->expectOutputRegex('/Choose credentials/');
     }
 
+    public function testFlags()
+    {
+        /*// generate
+        $mock = new MockCli(['neoan3','some','other'],dirname(__DIR__).'/playground');
+        // name
+        $mock->addInput('cli-test-credentials');
+        // add property
+        $mock->addInput('test-property');
+        // add value
+        $mock->addInput('test-value');
+        // next
+        $mock->addInput('default');
+        // add property
+        $mock->addInput('test-property2');
+        // add value
+        $mock->addInput('test-value2');
+        // end
+        $mock->addInput('n');
+        // write
+        $h = new CredentialHelper($mock);
+        $h->createNew();*/
+        $cli = new MockCli(['neoan3', 'credentials', '-n:cli-test-credentials'], $this->workPath);
+        $c = new Credentials($cli);
+        $c->chooseCredentials();
+        $this->expectOutputRegex('/some:/');
+    }
+
     public function testDisplayCredentials()
     {
         $cli = new MockCli(['neoan3', 'credentials'], $this->workPath);
