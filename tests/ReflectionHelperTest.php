@@ -1,10 +1,9 @@
 <?php
 
+namespace Neoan\Installer\Tests;
 
-use Helper\ReflectionHelper;
+use Neoan\Installer\Helper\ReflectionHelper;
 use PHPUnit\Framework\TestCase;
-
-require_once 'MockCli.php';
 
 class ReflectionHelperTest extends TestCase
 {

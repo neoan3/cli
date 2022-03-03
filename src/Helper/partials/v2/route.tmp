@@ -1,0 +1,25 @@
+<?php
+
+namespace Neoan3\Components;
+
+use {{extends}};
+
+/**
+ * Class {{name}}
+ *
+ * @package Neoan3\Components
+ * @generator Neoan3\Cli
+ */
+
+class {{name.pascal}} extends {{extended}}{
+    /**
+     * Route: {{name.kebab}}
+     */
+    function init(): void
+    {
+        $this
+            ->uni({{frame}})
+            {{hook}}
+            ->output();
+    }
+}

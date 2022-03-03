@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./</directory>
-    </include>
-    <exclude>
-      <directory>./bin</directory>
-      <directory>./tests</directory>
-      <directory>./vendor</directory>
-      <directory>./Helper/partials</directory>
-      <file>./Helper/ServerHelper.php</file>
-      <directory>./playground</directory>
-    </exclude>
-    <report>
-      <clover outputFile="tests/clover.xml"/>
-      <html outputDirectory="tests/coverage"/>
-    </report>
-  </coverage>
-  <testsuites>
-    <testsuite name="unit">
-      <directory suffix="Test.php">./tests</directory>
-    </testsuite>
-  </testsuites>
-  <logging/>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./</directory>
+        </include>
+        <exclude>
+            <directory>./bin</directory>
+            <directory>./tests</directory>
+            <directory>./vendor</directory>
+            <directory>./src/Helper/partials</directory>
+            <file>./src/Helper/ServerHelper.php</file>
+            <directory>./playground</directory>
+        </exclude>
+        <report>
+            <clover outputFile="tests/clover.xml"/>
+            <html outputDirectory="tests/coverage"/>
+        </report>
+    </coverage>
+    <testsuites>
+        <testsuite name="Neoan Installer Test Suite">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
+    <logging/>
 </phpunit>

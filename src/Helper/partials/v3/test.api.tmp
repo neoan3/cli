@@ -1,0 +1,12 @@
+
+    /**
+     * Api endpoint shall have no errors
+     *
+     * @generator Neoan3\Cli (for neoan3 v3.*)
+     */
+    function test{{method.pascal}}()
+    {
+        $response = $this->instance->{{method.camel}}({{paramString}});
+        $this->assertIsArray($response);
+        $this->assertSame({{expected}}, $response);
+    }

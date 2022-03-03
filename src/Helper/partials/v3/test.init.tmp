@@ -1,0 +1,11 @@
+
+    /**
+     * Route output shall have no errors
+     *
+     * @generator Neoan3\Cli (for neoan3 v3.*)
+     */
+    public function testInit()
+    {
+        $this->expectOutputRegex('/^<!doctype html>/');
+        $this->instance->init();
+    }

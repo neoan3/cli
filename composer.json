@@ -1,7 +1,7 @@
 {
-    "name": "neoan3/neoan3",
+    "name": "neoan3/installer",
     "homepage": "https://neoan3.rocks",
-    "description": "official neoan3 cli",
+    "description": "official neoan3 installer",
     "type": "library",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -10,19 +10,18 @@
     ],
     "autoload": {
         "psr-4": {
-            "Add\\": "Add",
-            "Creation\\": "Creation",
-            "Migration\\": "Migration",
-            "Cli\\": "Cli",
-            "Set\\": "Set",
-            "Helper\\": "Helper",
-            "Credentials\\": "Credentials"
+            "Neoan\\Installer\\": "src/",
+            "Neoan\\Installer\\Tests\\": "tests/"
         }
     },
     "authors": [
         {
             "name": "sroehrl",
             "email": "neoan@neoan.us"
+        },
+        {
+            "name": "mhochm",
+            "email": "moses@neoan.us"
         }
     ],
     "require": {
