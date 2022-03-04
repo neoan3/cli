@@ -1,9 +1,0 @@
-
-    /**
-     *  Route output shall have no errors
-     */
-    public function testInit()
-    {
-        $this->expectOutputRegex('/^<!doctype html>/');
-        $this->instance->init();
-    }

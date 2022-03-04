@@ -1,18 +1,13 @@
 <?php
 
+namespace Neoan\Installer\Tests;
 
-use Credentials\Credentials;
+use Neoan\Installer\Credentials\Credentials;
 use PHPUnit\Framework\TestCase;
-require_once 'MockCli.php';
-
 
 class CredentialsTest extends TestCase
 {
     private string $workPath;
-    protected function setUp(): void
-    {
-        $this->workPath = dirname(__DIR__).'/playground';
-    }
 
     public function testChooseCredentials()
     {
@@ -21,7 +16,7 @@ class CredentialsTest extends TestCase
         $cli->addInput('x');
         $cli->addInput('demo-credentials-testing');
         $cli->addInput('');
-        $c->chooseCredentials(['some'=>'value']);
+        $c->chooseCredentials(['some' => 'value']);
         $this->expectOutputRegex('/Choose credentials/');
     }
 
@@ -60,10 +55,15 @@ class CredentialsTest extends TestCase
         $cli = new MockCli(['neoan3', 'credentials'], $this->workPath);
         $c = new Credentials($cli);
         $c->currentCredentials = [
-            'key' => 'value'
+            'key' => 'value',
         ];
         $cli->addInput('x');
         $c->displayCredentials();
         $this->expectOutputRegex('/Listing values/');
+    }
+
+    protected function setUp() : void
+    {
+        $this->workPath = dirname(__DIR__) . '/playground';
     }
 }

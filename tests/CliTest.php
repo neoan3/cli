@@ -1,7 +1,8 @@
 <?php
 
+namespace Neoan\Installer\Tests;
 
-use Cli\Cli;
+use Neoan\Installer\Cli\Cli;
 use PHPUnit\Framework\TestCase;
 
 class CliTest extends TestCase
@@ -16,22 +17,25 @@ class CliTest extends TestCase
         $this->expectOutputString($cli->ascii);
 
     }
+
     public function testArgumentConstructor()
     {
-        $cli = new Cli(['','-flag'], __DIR__);
+        $cli = new Cli(['', '-flag'], __DIR__);
         $this->assertArrayHasKey('flag', $cli->flags);
     }
+
     public function testColors()
     {
         $cli = new Cli([], __DIR__);
         $this->expectOutputRegex("/\e\[32ma/");
         $cli->printLn('a', 'green');
     }
+
     public function testIo()
     {
         $cli = new Cli([], __DIR__);
         $this->expectOutputRegex("/hi/");
-        $cli->io('php ' .__DIR__."/silent.php");
+        $cli->io('php ' . __DIR__ . "/silent.php");
         $this->expectOutputRegex("/Command did/");
     }
 

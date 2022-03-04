@@ -1,7 +1,0 @@
-
-    function test{{method.pascal}}()
-    {
-        $response = $this->instance->{{method.camel}}({{paramString}});
-        $this->assertIsArray($response);
-        $this->assertSame({{expected}}, $response);
-    }

@@ -1,29 +1,23 @@
 <?php
 
+namespace Neoan\Installer\Tests;
 
-use Migration\Migration;
+use Neoan\Installer\Migration\Migration;
+use Neoan\Installer\Migration\Queryable;
 use PHPUnit\Framework\TestCase;
-
-require_once 'MockCli.php';
-require_once 'MockDatabaseWrapper.php';
 
 class MigrationTest extends TestCase
 {
-    private \Migration\DataBase $mockDb;
+    private Queryable $mockDb;
     private string $workpath;
 
-    static function setUpBeforeClass(): void
+    static function setUpBeforeClass() : void
     {
         if (!file_exists(dirname(__DIR__) . '/playground')) {
             mkdir(dirname(__DIR__) . '/playground');
         }
     }
 
-    protected function setUp(): void
-    {
-        $this->workpath = dirname(__DIR__) . '/playground';
-        $this->mockDb = new MockDatabaseWrapper([]);
-    }
     function testMalformed()
     {
         $cli = new MockCli(['neoan3-cli', 'migrate', 'models'], $this->workpath);
@@ -38,14 +32,14 @@ class MigrationTest extends TestCase
 
     function testProcess()
     {
-        foreach (['down','up','model'] as $direction){
-            if($direction !== 'model'){
+        foreach (['down', 'up', 'model'] as $direction) {
+            if ($direction !== 'model') {
                 $cli = new MockCli(['neoan3-cli', 'migrate', 'models', $direction], $this->workpath);
                 // get known tables
                 $this->mockDb->expectedOutcomes[] = [
                     [
-                        'Tables_in_cli_test_db' => 'test'
-                    ]
+                        'Tables_in_cli_test_db' => 'test',
+                    ],
                 ];
             } else {
                 $cli = new MockCli(['neoan3-cli', 'migrate', 'model', 'test', 'up'], $this->workpath);
@@ -64,28 +58,28 @@ class MigrationTest extends TestCase
 
             $this->mockDb->expectedOutcomes[] = [
                 [
-                    'Field' => 'id',
-                    'Key' => 'PRI',
-                    'Type' => 'BINARY',
-                    'Null' => 'No',
+                    'Field'   => 'id',
+                    'Key'     => 'PRI',
+                    'Type'    => 'BINARY',
+                    'Null'    => 'No',
                     'Default' => false,
-                    'Extra' => ''
+                    'Extra'   => '',
                 ],
                 [
-                    'Field' => 'user_id',
-                    'Key' => 'UNI',
-                    'Type' => 'BINARY',
-                    'Null' => 'No',
+                    'Field'   => 'user_id',
+                    'Key'     => 'UNI',
+                    'Type'    => 'BINARY',
+                    'Null'    => 'No',
                     'Default' => false,
-                    'Extra' => ''
+                    'Extra'   => '',
                 ],
                 [
-                    'Field' => 'name',
-                    'Key' => '',
-                    'Type' => 'varchar(255)',
-                    'Null' => 'Yes',
+                    'Field'   => 'name',
+                    'Key'     => '',
+                    'Type'    => 'varchar(255)',
+                    'Null'    => 'Yes',
                     'Default' => false,
-                    'Extra' => ''
+                    'Extra'   => '',
                 ],
             ];
 
@@ -97,13 +91,20 @@ class MigrationTest extends TestCase
         }
 
     }
+
     function testDefaultQuotes()
     {
         $mockDb = new MockDatabaseWrapper();
-        $migrate = new Migration(new MockCli(['neoan3-cli', '-v'],$this->workpath), $mockDb);
-        $one = $migrate->sqlRow('key',['default'=>'sam','type'=>'varchar(255)','key'=>false,'nullable'=>false]);
-        $two = $migrate->sqlRow('key',['default'=>1,'type'=>'int(11)','key'=>false,'nullable'=>true]);
+        $migrate = new Migration(new MockCli(['neoan3-cli', '-v'], $this->workpath), $mockDb);
+        $one = $migrate->sqlRow('key', ['default' => 'sam', 'type' => 'varchar(255)', 'key' => false, 'nullable' => false]);
+        $two = $migrate->sqlRow('key', ['default' => 1, 'type' => 'int(11)', 'key' => false, 'nullable' => true]);
         $this->assertMatchesRegularExpression('/`key`/', $one);
+    }
+
+    protected function setUp() : void
+    {
+        $this->workpath = dirname(__DIR__) . '/playground';
+        $this->mockDb = new MockDatabaseWrapper([]);
     }
 
 

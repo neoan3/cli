@@ -1,0 +1,34 @@
+<?php
+
+namespace Neoan3\Components;
+
+use Neoan3\Frame\{{frame.pascal}};
+
+/**
+ * Class {{name}}
+ *
+ * @package Neoan3\Components
+ * @generator Neoan3\Cli
+ */
+
+class {{name.pascal}} extends {{frame.pascal}}{
+    /**
+     * GET: api.v1/{{name.kebab}}
+     * @param $params
+     * @return array
+     */
+    function get{{name.pascal}}(array $params): array
+    {
+        return $params;
+    }
+
+    /**
+     * POST: api.v1/{{name.kebab}}
+     * @param $body
+     * @return array
+     */
+    function post{{name.pascal}}(array $body): array
+    {
+        return $body;
+    }
+}
